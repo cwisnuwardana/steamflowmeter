@@ -24,7 +24,7 @@ col1, col2 = st.columns([1, 5])
 
 with col1:
     if os.path.exists(logo_path):
-        st.image(logo_path, width=120)
+        st.image(logo_path, width=270)
 
 with col2:
     st.title("S435 Steam Flowmeter Installation Assistant")
