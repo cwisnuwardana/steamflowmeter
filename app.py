@@ -210,6 +210,5 @@ with tab3:
 st.divider()
 
 st.caption(
-    "© SUTO ITEC Indonesia | Steam Flowmeter Installation Assistant Ver 1.0 - 
-    created by Cahyadi Wisnu Wardana, MM"
+    "© SUTO ITEC Indonesia | Steam Flowmeter Installation Assistant Ver 1.0 created by Cahyadi Wisnu Wardana, MM"
 )
