@@ -1,3 +1,5 @@
+from data.pipe_database import pipe_data
+from data.installation_rules import installation_rules
 import streamlit as st
 from PIL import Image
 import os
