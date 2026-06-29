@@ -1,3 +1,4 @@
+from utils.analyzer import analyze_installation
 from data.pipe_database import pipe_data
 from data.installation_rules import installation_rules
 import streamlit as st
