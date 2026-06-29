@@ -207,6 +207,38 @@ with tab3:
 """)
 
 # =====================================================
+# GENERATE ANALYSIS
+# =====================================================
+
+if generate:
+
+    pipe_id = pipe_data[dn]["id"]
+
+    rule = installation_rules[disturbance]
+
+    required_up = pipe_id * rule["upstream"]
+    required_down = pipe_id * rule["downstream"]
+
+    install_status = (
+        "PASS"
+        if upstream >= required_up and downstream >= required_down
+        else "FAIL"
+    )
+
+    steam_state = (
+        "Superheated"
+        if steam_condition == "Superheated Steam"
+        else "Saturated"
+    )
+
+    st.success("Analysis Completed")
+
+    st.write(f"Steam State : {steam_state}")
+    st.write(f"Installation : {install_status}")
+    st.write(f"Required Upstream : {required_up:.0f} mm")
+    st.write(f"Required Downstream : {required_down:.0f} mm")
+
+# =====================================================
 # FOOTER
 # =====================================================
 st.divider()
