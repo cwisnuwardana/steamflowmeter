@@ -1,8 +1,15 @@
 import pandas as pd
 
+# ======================================================
+# LOAD DATABASE
+# ======================================================
+
 flow_db = pd.read_excel("data/S435_Flow_Range_Database.xlsx")
 
-# Rapikan data
+# Rapikan Header
+flow_db.columns = flow_db.columns.str.strip()
+
+# Rapikan Data
 flow_db["Pressure_MPa"] = pd.to_numeric(
     flow_db["Pressure_MPa"],
     errors="coerce"
@@ -15,37 +22,46 @@ flow_db["DN"] = (
     .str.upper()
 )
 
+# ======================================================
+# FLOW LOOKUP
+# ======================================================
+
 def get_flow_range(pressure, dn):
 
     pressure = round(float(pressure), 1)
+
     dn = str(dn).strip().upper()
 
-    # Toleransi floating point
-    row = flow_db[
-        (abs(flow_db["Pressure_MPa"] - pressure) < 0.0001)
-        &
-        (flow_db["DN"] == dn)
+    # Debug
+    print("------------------------------------")
+    print("INPUT PRESSURE :", pressure)
+    print("INPUT DN       :", dn)
+
+    # Filter Pressure
+    db = flow_db.copy()
+
+    db = db[
+        abs(db["Pressure_MPa"] - pressure) < 0.001
     ]
 
-    if row.empty:
+    print("Row after Pressure Filter :", len(db))
+
+    # Filter DN
+    db = db[
+        db["DN"] == dn
+    ]
+
+    print("Row after DN Filter :", len(db))
+
+    if db.empty:
+
+        print(flow_db)
 
         raise ValueError(
-            f"""
-Flow lookup failed
-
-Pressure Input : {pressure}
-
-DN Input : {dn}
-
-Available Pressure :
-{flow_db['Pressure_MPa'].unique()}
-
-Available DN :
-{flow_db['DN'].unique()}
-"""
+            "Flow Database Lookup Failed"
         )
 
-    row = row.iloc[0]
+    row = db.iloc[0]
 
     return {
 
