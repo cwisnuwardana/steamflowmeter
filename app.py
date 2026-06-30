@@ -1,1 +1,260 @@
+import streamlit as st
+from PIL import Image
+import os
 
+from utils.analyzer import analyze_installation
+
+# ==========================================================
+# PAGE CONFIG
+# ==========================================================
+
+st.set_page_config(
+    page_title="SUTO S435 Engineering Assistant",
+    page_icon="💨",
+    layout="wide"
+)
+
+# ==========================================================
+# ASSET
+# ==========================================================
+
+LOGO = "assets/suto_logo.png"
+PRODUCT = "assets/S435.png"
+
+# ==========================================================
+# HEADER
+# ==========================================================
+
+col1, col2 = st.columns([1,5])
+
+with col1:
+
+    if os.path.exists(LOGO):
+        st.image(LOGO, width=170)
+
+with col2:
+
+    st.title("S435 Steam Flowmeter Engineering Assistant")
+
+    st.caption(
+        "Engineering Verification • Installation Assessment • Flow Range Evaluation"
+    )
+
+st.divider()
+
+# ==========================================================
+# SIDEBAR
+# ==========================================================
+
+st.sidebar.title("Engineering Input")
+
+company = st.sidebar.text_input(
+    "Company",
+    placeholder="PT ABC Indonesia"
+)
+
+project = st.sidebar.text_input(
+    "Project",
+    placeholder="Steam Flowmeter Installation"
+)
+
+engineer = st.sidebar.text_input(
+    "Engineer",
+    placeholder="Cahyadi"
+)
+
+st.sidebar.divider()
+
+st.sidebar.subheader("Customer Operating Data")
+
+steam_condition = st.sidebar.radio(
+
+    "Steam Condition (Customer Statement)",
+
+    [
+        "Saturated",
+        "Superheated"
+    ]
+
+)
+
+pressure = st.sidebar.number_input(
+
+    "Pressure (MPa)",
+
+    min_value=0.02,
+
+    max_value=1.60,
+
+    value=0.90,
+
+    step=0.10
+
+)
+
+temperature = st.sidebar.number_input(
+
+    "Temperature (°C)",
+
+    min_value=0.0,
+
+    value=170.0,
+
+    step=1.0
+
+)
+
+dn = st.sidebar.selectbox(
+
+    "Pipe Size",
+
+    [
+        "DN25",
+        "DN40",
+        "DN50",
+        "DN65",
+        "DN80",
+        "DN100",
+        "DN125",
+        "DN150",
+        "DN200",
+        "DN250",
+        "DN300"
+    ]
+
+)
+
+schedule = st.sidebar.selectbox(
+
+    "Pipe Schedule",
+
+    [
+        "SCH10",
+        "SCH20",
+        "SCH40",
+        "SCH60",
+        "SCH80",
+        "SCH100",
+        "SCH120",
+        "SCH140",
+        "SCH160"
+    ]
+
+)
+
+actual_flow = st.sidebar.number_input(
+
+    "Actual Steam Flow (t/h)",
+
+    min_value=0.00,
+
+    value=1.00,
+
+    step=0.01
+
+)
+
+disturbance = st.sidebar.selectbox(
+
+    "Nearest Upstream Disturbance",
+
+    [
+        "Tee",
+        "90° Elbow",
+        "2 × 90° Elbow",
+        "Reducer",
+        "Flange",
+        "Two Elbows on Different Plane"
+    ]
+
+)
+
+upstream = st.sidebar.number_input(
+
+    "Available Upstream Length (mm)",
+
+    value=1000
+
+)
+
+downstream = st.sidebar.number_input(
+
+    "Available Downstream Length (mm)",
+
+    value=500
+
+)
+
+st.sidebar.divider()
+
+generate = st.sidebar.button(
+
+    "🚀 Generate Engineering Analysis",
+
+    use_container_width=True
+
+)
+
+# ==========================================================
+# PRODUCT IMAGE
+# ==========================================================
+
+if os.path.exists(PRODUCT):
+
+    st.image(PRODUCT, width=260)
+
+# ==========================================================
+# RESULT
+# ==========================================================
+
+result = None
+
+if generate:
+
+    result = analyze_installation(
+
+        customer_steam=steam_condition,
+
+        pressure=pressure,
+
+        temperature=temperature,
+
+        dn=dn,
+
+        schedule=schedule,
+
+        actual_flow=actual_flow,
+
+        disturbance=disturbance,
+
+        available_upstream=upstream,
+
+        available_downstream=downstream
+
+    )
+
+# ==========================================================
+# TAB
+# ==========================================================
+
+tab1, tab2, tab3, tab4, tab5, tab6, tab7 = st.tabs(
+
+    [
+
+        "📊 Summary",
+
+        "📐 Pipe",
+
+        "🔥 Steam",
+
+        "📈 Flow",
+
+        "📏 Installation",
+
+        "💡 Recommendation",
+
+        "📚 Methodology"
+
+    ]
+
+)
