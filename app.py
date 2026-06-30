@@ -258,3 +258,129 @@ tab1, tab2, tab3, tab4, tab5, tab6, tab7 = st.tabs(
     ]
 
 )
+# ==========================================================
+# TAB Summary
+# ==========================================================
+with tab1:
+
+    st.header("Engineering Summary")
+
+    if result is None:
+
+        st.info("Click **Generate Engineering Analysis**")
+
+    else:
+
+        col1, col2, col3 = st.columns(3)
+
+        with col1:
+
+            st.metric(
+                "Customer Statement",
+                result["customer_steam"]
+            )
+
+            st.metric(
+                "Calculated Steam",
+                result["calculated_steam"]
+            )
+
+        with col2:
+
+            st.metric(
+                "Installation",
+                result["installation_status"]
+            )
+
+            st.metric(
+                "Flow Status",
+                result["flow_status"]
+            )
+
+        with col3:
+
+            st.metric(
+                "Min Flow",
+                f'{result["flow"]["min_flow"]:.2f} t/h'
+            )
+
+            st.metric(
+                "Max Flow",
+                f'{result["flow"]["max_flow"]:.2f} t/h'
+            )
+
+        st.success(result["recommendation"])
+
+with tab2:
+
+    st.header("Pipe Information")
+    
+    if result:
+    
+        st.write(result["pipe"])
+
+with tab3:
+
+    st.header("Steam Property")
+
+    if result:
+
+        st.write(result["steam"])
+
+with tab4:
+
+    st.header("Flow Range")
+
+    if result:
+
+        st.write(result["flow"])
+
+with tab5:
+
+    st.header("Installation")
+
+    if result:
+
+        col1, col2, col3 = st.columns(3)
+
+        with col1:
+            st.metric(
+                "Required Upstream",
+                f'{result["required_upstream"]:.0f} mm'
+            )
+
+        with col2:
+            st.metric(
+                "Required Downstream",
+                f'{result["required_downstream"]:.0f} mm'
+            )
+
+        with col3:
+            st.metric(
+                "Status",
+                result["installation_status"]
+            )
+
+with tab6:
+
+    st.header("Engineering Recommendation")
+
+    if result:
+
+        st.success(result["recommendation"])
+
+with tab7:
+
+    st.header("Engineering Methodology")
+
+    st.markdown("""
+### Methodology
+
+1. Verify customer steam statement.
+2. Compare operating temperature with saturation temperature.
+3. Calculate pipe internal diameter.
+4. Determine required straight pipe length.
+5. Verify installation (PASS / FAIL).
+6. Compare operating flow with SUTO S435 flow range.
+7. Generate engineering recommendation.
+""")
