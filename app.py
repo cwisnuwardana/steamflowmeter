@@ -208,34 +208,32 @@ with tab3:
 # =====================================================
 # GENERATE ANALYSIS
 # =====================================================
+result = None
 
 if generate:
 
-    pipe_id = pipe_data[dn]["id"]
+    result = analyze_installation(
 
-    rule = installation_rules[disturbance]
+        customer_steam=steam_condition,
 
-    required_up = pipe_id * rule["upstream"]
-    required_down = pipe_id * rule["downstream"]
+        pressure=pressure,
 
-    install_status = (
-        "PASS"
-        if upstream >= required_up and downstream >= required_down
-        else "FAIL"
+        temperature=temperature,
+
+        dn=dn,
+
+        schedule=schedule,
+
+        actual_flow=actual_flow,
+
+        disturbance=disturbance,
+
+        available_upstream=upstream,
+
+        available_downstream=downstream
+
     )
 
-    steam_state = (
-        "Superheated"
-        if steam_condition == "Superheated Steam"
-        else "Saturated"
-    )
-
-    st.success("Analysis Completed")
-
-    st.write(f"Steam State : {steam_state}")
-    st.write(f"Installation : {install_status}")
-    st.write(f"Required Upstream : {required_up:.0f} mm")
-    st.write(f"Required Downstream : {required_down:.0f} mm")
 
 # =====================================================
 # FOOTER
