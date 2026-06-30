@@ -89,7 +89,10 @@ def analyze_installation(
         pressure,
         dn
     )
-
+    if flow is None:
+    raise ValueError(
+        f"Flow database not found for Pressure={pressure} MPa, DN={dn}"
+    )  
     # ==========================================
     # STEAM PROPERTY
     # ==========================================
