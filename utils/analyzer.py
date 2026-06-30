@@ -1,50 +1,179 @@
-from data.pipe_database import pipe_data
-from data.installation_rules import installation_rules
+from utils.pipe_lookup import get_pipe_data
+from utils.flow_lookup import get_flow_range
+from utils.steam_lookup import get_steam_property
+from utils.recommendation import get_recommendation
 
+import pandas as pd
+
+# ==========================================================
+# LOAD INSTALLATION RULE
+# ==========================================================
+
+rule_db = pd.read_excel(
+    "data/installation_rules.xlsx"
+)
+
+
+# ==========================================================
+# ANALYZE INSTALLATION
+# ==========================================================
 
 def analyze_installation(
+
+    customer_steam,
+
+    pressure,
+
+    temperature,
+
     dn,
+
+    schedule,
+
+    actual_flow,
+
     disturbance,
-    upstream,
-    downstream,
-    steam_condition
+
+    available_upstream,
+
+    available_downstream
+
 ):
 
-    pipe = pipe_data[dn]
+    # ==========================================
+    # PIPE DATA
+    # ==========================================
+
+    pipe = get_pipe_data(
+        dn,
+        schedule
+    )
 
     pipe_id = pipe["id"]
 
-    rule = installation_rules[disturbance]
+    # ==========================================
+    # FLOW RANGE
+    # ==========================================
 
-    required_up = pipe_id * rule["upstream"]
-    required_down = pipe_id * rule["downstream"]
+    flow = get_flow_range(
+        pressure,
+        dn
+    )
 
-    status = (
+    # ==========================================
+    # STEAM PROPERTY
+    # ==========================================
+
+    steam = get_steam_property(
+        pressure
+    )
+
+    # ==========================================
+    # STEAM VERIFICATION
+    # ==========================================
+
+    boiling = steam["boiling_point"]
+
+    if temperature > boiling:
+
+        calculated_steam = "Superheated"
+
+    else:
+
+        calculated_steam = "Saturated"
+
+    # ==========================================
+    # INSTALLATION RULE
+    # ==========================================
+
+    row = rule_db[
+        rule_db["Disturbance"] == disturbance
+    ]
+
+    row = row.iloc[0]
+
+    upstream_D = float(
+        row["Upstream_D"]
+    )
+
+    downstream_D = float(
+        row["Downstream_D"]
+    )
+
+    required_upstream = upstream_D * pipe_id
+
+    required_downstream = downstream_D * pipe_id
+
+    installation_status = (
         "PASS"
-        if upstream >= required_up and downstream >= required_down
-        else "FAIL"
+        if
+        available_upstream >= required_upstream
+        and
+        available_downstream >= required_downstream
+        else
+        "FAIL"
     )
 
-    recommendation = (
-        "Installation complies with SUTO recommendation."
-        if status == "PASS"
-        else f"Increase upstream straight pipe to at least {required_up:.0f} mm."
+    # ==========================================
+    # FLOW STATUS
+    # ==========================================
+
+    if actual_flow < flow["min_flow"]:
+
+        flow_status = "LOW"
+
+    elif actual_flow > flow["max_flow"]:
+
+        flow_status = "HIGH"
+
+    else:
+
+        flow_status = "NORMAL"
+
+    # ==========================================
+    # RECOMMENDATION
+    # ==========================================
+
+    recommendation = get_recommendation(
+
+        customer_steam,
+
+        calculated_steam,
+
+        installation_status,
+
+        actual_flow,
+
+        flow["min_flow"],
+
+        flow["max_flow"]
+
     )
+
+    # ==========================================
+    # RETURN
+    # ==========================================
 
     return {
 
-        "steam_state":
-            "Superheated"
-            if steam_condition == "Superheated Steam"
-            else "Saturated",
+        "pipe": pipe,
 
-        "status": status,
+        "steam": steam,
 
-        "required_up": required_up,
+        "flow": flow,
 
-        "required_down": required_down,
+        "flow_status": flow_status,
 
-        "recommendation": recommendation,
+        "customer_steam": customer_steam,
 
-        "image": rule["image"]
+        "calculated_steam": calculated_steam,
+
+        "installation_status": installation_status,
+
+        "required_upstream": round(required_upstream,1),
+
+        "required_downstream": round(required_downstream,1),
+
+        "recommendation": recommendation
+
     }
