@@ -9,9 +9,39 @@ import pandas as pd
 # LOAD INSTALLATION RULE
 # ==========================================================
 
-rule_db = pd.read_excel(
-    "data/installation_rules.xlsx"
-)
+installation_rules = {
+
+    "Tee": {
+        "upstream": 15,
+        "downstream": 5
+    },
+
+    "90° Elbow": {
+        "upstream": 20,
+        "downstream": 5
+    },
+
+    "2 × 90° Elbow": {
+        "upstream": 35,
+        "downstream": 5
+    },
+
+    "Reducer": {
+        "upstream": 20,
+        "downstream": 5
+    },
+
+    "Flange": {
+        "upstream": 10,
+        "downstream": 5
+    },
+
+    "Two Elbows on Different Plane": {
+        "upstream": 40,
+        "downstream": 5
+    }
+
+}
 
 
 # ==========================================================
