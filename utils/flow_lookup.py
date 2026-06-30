@@ -18,11 +18,15 @@ def get_flow_range(
     dn
 ):
 
-    row = flow_db[
-        (flow_db["Pressure_MPa"] == pressure)
-        &
-        (flow_db["DN"] == dn)
-    ]
+flow_db["Pressure_MPa"] = flow_db["Pressure_MPa"].round(2)
+
+pressure = round(float(pressure),2)
+
+row = flow_db[
+    (flow_db["Pressure_MPa"] == pressure)
+    &
+    (flow_db["DN"] == dn)
+]
 
     if row.empty:
         return None
