@@ -1,20 +1,36 @@
 import pandas as pd
 
-# ============================================
+# ===================================================
 # LOAD PIPE DATABASE
-# ============================================
+# ===================================================
 
-pipe_db = pd.read_excel("data/pipe_database.xlsx")
+pipe_db = pd.read_excel(
+    "data/pipe_database.xlsx"
+)
 
 
-# ============================================
+# ===================================================
 # GET PIPE DATA
-# ============================================
+# ===================================================
 
-def get_pipe_data(dn, schedule):
+def get_pipe_data(
+    dn,
+    schedule
+):
+
+    # -----------------------------------------
+
+    dn_number = int(
+        dn.replace(
+            "DN",
+            ""
+        )
+    )
+
+    # -----------------------------------------
 
     row = pipe_db[
-        (pipe_db["DN"] == dn)
+        pipe_db["DN"] == dn_number
     ]
 
     if row.empty:
@@ -22,20 +38,39 @@ def get_pipe_data(dn, schedule):
 
     row = row.iloc[0]
 
-    od = float(row["OD"])
+    od = float(
+        row["OD"]
+    )
 
-    thickness = float(row[schedule])
+    thickness = row[schedule]
+
+    if pd.isna(thickness):
+
+        return None
+
+    thickness = float(
+        thickness
+    )
 
     pipe_id = od - (2 * thickness)
 
     return {
 
-        "DN": dn,
+        "dn": dn,
 
-        "OD": od,
+        "od": round(
+            od,
+            2
+        ),
 
-        "Thickness": thickness,
+        "thickness": round(
+            thickness,
+            2
+        ),
 
-        "ID": round(pipe_id,2)
+        "id": round(
+            pipe_id,
+            2
+        )
 
     }
