@@ -1,47 +1,56 @@
 import pandas as pd
 
-# ======================================================
-# LOAD FLOW DATABASE
-# ======================================================
+flow_db = pd.read_excel("data/S435_Flow_Range_Database.xlsx")
 
-flow_db = pd.read_excel(
-    "data/S435_Flow_Range_Database.xlsx"
+# Rapikan data
+flow_db["Pressure_MPa"] = pd.to_numeric(
+    flow_db["Pressure_MPa"],
+    errors="coerce"
 )
 
-# Pastikan tipe data benar
-flow_db["Pressure_MPa"] = flow_db["Pressure_MPa"].astype(float)
-flow_db["DN"] = flow_db["DN"].astype(str)
-
-# ======================================================
-# GET FLOW RANGE
-# ======================================================
+flow_db["DN"] = (
+    flow_db["DN"]
+    .astype(str)
+    .str.strip()
+    .str.upper()
+)
 
 def get_flow_range(pressure, dn):
 
     pressure = round(float(pressure), 1)
     dn = str(dn).strip().upper()
 
-    print("================================")
-    print("Lookup Pressure :", repr(pressure))
-    print("Lookup DN       :", repr(dn))
-
-    print("Available pressures :", sorted(flow_db["Pressure_MPa"].unique()))
-    print("Available DN        :", sorted(flow_db["DN"].unique()))
-
+    # Toleransi floating point
     row = flow_db[
-        (flow_db["Pressure_MPa"].round(1) == pressure)
+        (abs(flow_db["Pressure_MPa"] - pressure) < 0.0001)
         &
-        (flow_db["DN"].str.strip().str.upper() == dn)
+        (flow_db["DN"] == dn)
     ]
 
-    print("Matched rows :", len(row))
-
     if row.empty:
-        return None
+
+        raise ValueError(
+            f"""
+Flow lookup failed
+
+Pressure Input : {pressure}
+
+DN Input : {dn}
+
+Available Pressure :
+{flow_db['Pressure_MPa'].unique()}
+
+Available DN :
+{flow_db['DN'].unique()}
+"""
+        )
 
     row = row.iloc[0]
 
     return {
+
         "min_flow": float(row["Min_tph"]),
+
         "max_flow": float(row["Max_tph"])
+
     }
