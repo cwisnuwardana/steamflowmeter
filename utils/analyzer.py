@@ -95,13 +95,11 @@ def analyze_installation(
     )
     
     print("Flow Result :", flow)
-        
+    
     if flow is None:
-        st.write("Pressure =", pressure)
-        st.write("DN =", dn)
-        st.write("Available Pressure =", sorted(flow_db["Pressure_MPa"].unique()))
-        st.write("Available DN =", sorted(flow_db["DN"].unique()))
-        st.stop()  
+    raise ValueError(
+        f"Flow lookup failed. Pressure={pressure}, DN={dn}"
+    )     
     # ==========================================
     # STEAM PROPERTY
     # ==========================================
