@@ -85,14 +85,21 @@ def analyze_installation(
     # FLOW RANGE
     # ==========================================
 
+    print("========================")
+    print("Pressure :", pressure)
+    print("DN :", dn)
+    
     flow = get_flow_range(
         pressure,
         dn
     )
+    
+    print("Flow Result :", flow)
+    
     if flow is None:
-    raise ValueError(
-        f"Flow database not found for Pressure={pressure} MPa, DN={dn}"
-    )  
+        raise ValueError(
+            f"Flow lookup failed -> Pressure={pressure}, DN={dn}"
+        )  
     # ==========================================
     # STEAM PROPERTY
     # ==========================================
