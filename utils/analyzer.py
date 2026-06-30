@@ -116,19 +116,11 @@ def analyze_installation(
     # INSTALLATION RULE
     # ==========================================
 
-    row = rule_db[
-        rule_db["Disturbance"] == disturbance
-    ]
-
-    row = row.iloc[0]
-
-    upstream_D = float(
-        row["Upstream_D"]
-    )
-
-    downstream_D = float(
-        row["Downstream_D"]
-    )
+    rule = installation_rules[disturbance]
+    
+    upstream_D = rule["upstream"]
+    
+    downstream_D = rule["downstream"]
 
     required_upstream = upstream_D * pipe_id
 
