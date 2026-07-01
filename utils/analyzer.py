@@ -2,6 +2,7 @@ from utils.pipe_lookup import get_pipe_data
 from utils.flow_lookup import get_flow_range
 from utils.steam_lookup import get_steam_property
 from utils.recommendation import get_recommendation
+from utils.meter_selector import recommend_meter
 
 import pandas as pd
 
