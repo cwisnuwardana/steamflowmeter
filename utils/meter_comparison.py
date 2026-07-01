@@ -68,25 +68,32 @@ def compare_meters(pressure, actual_flow):
             1
         )
 
-        if actual_flow < row["Min_tph"]:
+if actual_flow < row["Min_tph"]:
 
-            status = "🔴 Oversized"
-            note = "Actual flow below minimum measurable range."
+    status = "🔴 Oversized"
+    note = "Actual flow is below the minimum measurable flow."
 
-        elif utilization < 20:
+elif actual_flow <= row["Max_tph"]:
 
-            status = "🟡 Acceptable"
-            note = "Measurement possible but low utilization."
-
-        elif utilization < 80:
-
+        if utilization >= 60:
+        
+            status = "🟢 Best Choice"
+            note = "Excellent measuring range."
+    
+        elif utilization >= 30:
+    
             status = "🟢 Recommended"
             note = "Good measuring range."
-
+    
         else:
-
-            status = "🟠 Near Maximum"
-            note = "Close to maximum measuring range."
+    
+            status = "🟢 Recommended"
+            note = "Flow is inside measuring range. Low utilization but acceptable."
+        
+        else:
+        
+            status = "🟠 Undersized"
+            note = "Actual flow exceeds maximum measuring range."
 
         result.append({
 
