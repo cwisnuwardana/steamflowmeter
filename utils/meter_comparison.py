@@ -63,40 +63,50 @@ def compare_meters(
     )
 
     result = []
-
     for _, row in db.iterrows():
 
-        if actual_flow < row["Min_tph"]:
+    utilization = round(
+        actual_flow / row["Max_tph"] * 100,
+        1
+    )
 
-            status = "🔴 Too Large"
+    if actual_flow < row["Min_tph"]:
 
-        elif actual_flow > row["Max_tph"]:
+        status = "🔴 Oversized"
+        note = "Actual flow below minimum measurable range."
 
-            status = "🟠 Too Small"
+    elif utilization < 20:
 
-        else:
+        status = "🟡 Acceptable"
+        note = "Measurement possible but low utilization."
 
-            status = "🟢 Recommended"
+    elif utilization < 80:
 
-        utilization = round(
-            actual_flow / row["Max_tph"] * 100,
-            1
-        )
+        status = "🟢 Recommended"
+        note = "Good measuring range."
 
-        result.append({
+    else:
 
-            "Meter": row["DN"],
+        status = "🟠 Near Maximum"
+        note = "Close to maximum measuring range."
 
-            "Min Flow (t/h)": row["Min_tph"],
+    result.append({
 
-            "Max Flow (t/h)": row["Max_tph"],
+        "Meter": row["DN"],
 
-            "Actual Flow (t/h)": actual_flow,
+        "Min Flow (t/h)": round(row["Min_tph"], 2),
 
-            "Utilization (%)": utilization,
+        "Max Flow (t/h)": round(row["Max_tph"], 2),
 
-            "Status": status
+        "Actual Flow (t/h)": round(actual_flow, 2),
 
-        })
+        "Utilization (%)": utilization,
 
-    return pd.DataFrame(result)
+        "Status": status,
+
+        "Engineering Note": note
+
+    })
+
+return pd.DataFrame(result)
+   
