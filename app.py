@@ -394,9 +394,19 @@ with tab7:
 
 with tab8:
 
-    st.header("Meter Comparison")
+    st.header("S435 Meter Selection")
 
     if comparison is not None:
+
+        st.info(f"""
+
+**Operating Pressure :** {pressure:.2f} MPa
+
+**Actual Steam Flow :** {actual_flow:.2f} t/h
+
+The table below compares all available S435 meter sizes based on the current operating condition.
+
+""")
 
         st.dataframe(
 
@@ -407,6 +417,42 @@ with tab8:
             hide_index=True
 
         )
+
+        # ==========================================
+        # BEST RECOMMENDED METER
+        # ==========================================
+
+        recommended = comparison[
+            comparison["Status"] == "🟢 Recommended"
+        ]
+
+        if not recommended.empty:
+
+            best = recommended.iloc[0]
+
+            st.success(f"""
+
+### ✅ Best Recommended Meter
+
+**Meter :** {best['Meter']}
+
+**Flow Range :**
+{best['Min Flow (t/h)']} – {best['Max Flow (t/h)']} t/h
+
+**Engineering Note :**
+{best['Engineering Note']}
+
+""")
+
+        else:
+
+            st.error("""
+
+⚠ No suitable S435 meter found.
+
+Please review operating pressure or steam flow.
+
+""")
 
     else:
 
