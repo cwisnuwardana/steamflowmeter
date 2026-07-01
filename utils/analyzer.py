@@ -164,6 +164,18 @@ def analyze_installation(
         flow_status = "NORMAL"
 
     # ==========================================
+    # METER RECOMMENDATION
+    # ==========================================
+    
+    meter = recommend_meter(
+    
+        pressure,
+    
+        actual_flow
+    
+    )
+    
+    # ==========================================
     # RECOMMENDATION
     # ==========================================
 
@@ -188,25 +200,27 @@ def analyze_installation(
     # ==========================================
 
     return {
-
+    
         "pipe": pipe,
-
+    
         "steam": steam,
-
+    
         "flow": flow,
-
+    
+        "meter": meter,
+    
         "flow_status": flow_status,
-
+    
         "customer_steam": customer_steam,
-
+    
         "calculated_steam": calculated_steam,
-
+    
         "installation_status": installation_status,
-
+    
         "required_upstream": round(required_upstream,1),
-
+    
         "required_downstream": round(required_downstream,1),
-
+    
         "recommendation": recommendation
-
+    
     }
