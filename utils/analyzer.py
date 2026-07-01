@@ -3,6 +3,7 @@ from utils.flow_lookup import get_flow_range
 from utils.steam_lookup import get_steam_property
 from utils.recommendation import get_recommendation
 from utils.meter_selector import recommend_meter
+from utils.engineering_score import calculate_engineering_score
 
 import pandas as pd
 
@@ -194,6 +195,22 @@ def analyze_installation(
     )
 
     # ==========================================
+    # ENGINEERING SCORE
+    # ==========================================
+    
+    engineering_score = calculate_engineering_score(
+    
+        customer_steam,
+    
+        calculated_steam,
+    
+        installation_status,
+    
+        flow_status
+    
+    )
+    
+    # ==========================================
     # RETURN
     # ==========================================
 
@@ -206,6 +223,8 @@ def analyze_installation(
         "flow": flow,
     
         "meter": meter,
+
+        "engineering_score": engineering_score,
     
         "flow_status": flow_status,
     
