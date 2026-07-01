@@ -1,5 +1,6 @@
 import streamlit as st
 from PIL import Image
+from utils.meter_comparison import compare_meters
 import os
 
 from utils.analyzer import analyze_installation
@@ -230,12 +231,18 @@ if generate:
         available_downstream=downstream
 
     )
+    comparison = compare_meters(
 
+        pressure,
+
+        actual_flow
+
+    )
 # ==========================================================
 # TAB
 # ==========================================================
 
-tab1, tab2, tab3, tab4, tab5, tab6, tab7 = st.tabs(
+tab1, tab2, tab3, tab4, tab5, tab6, tab7, tab8 = st.tabs(
 
     [
 
@@ -252,6 +259,8 @@ tab1, tab2, tab3, tab4, tab5, tab6, tab7 = st.tabs(
         "💡 Recommendation",
 
         "📚 Methodology"
+
+        "📊 Meter Comparison"
 
     ]
 
@@ -382,3 +391,25 @@ with tab7:
 6. Compare operating flow with SUTO S435 flow range.
 7. Generate engineering recommendation.
 """)
+
+with tab8:
+
+    st.header("Meter Comparison")
+
+    if comparison is not None:
+
+        st.dataframe(
+
+            comparison,
+
+            use_container_width=True,
+
+            hide_index=True
+
+        )
+
+    else:
+
+        st.info(
+            "Click Generate Engineering Analysis"
+        )
