@@ -427,32 +427,33 @@ with tab8:
             comparison["Status"] == "🟢 Recommended"
         ]
 
-         if not recommended.empty:
-        
+        if not recommended.empty:
+
             best = recommended.iloc[0]
-        
+
             st.success(f"""
-        ### ✅ Best Recommended Meter
-        
-        **Meter :**
-        {best['Meter']}
-        
-        **Flow Range :**
-        {best['Min Flow (t/h)']} – {best['Max Flow (t/h)']} t/h
-        
-        **Engineering Note :**
-        {best['Engineering Note']}
-        """)
-        
+### ✅ Best Recommended Meter
+
+**Meter :**
+{best['Meter']}
+
+**Flow Range :**
+{best['Min Flow (t/h)']} – {best['Max Flow (t/h)']} t/h
+
+**Engineering Note :**
+{best['Engineering Note']}
+""")
+
         else:
-        
+
             st.error("""
-        ⚠ No suitable S435 meter found.
-        
-        Please review operating pressure or steam flow.
-        """)        
+⚠ No suitable S435 meter found.
+
+Please review operating pressure or steam flow.
+""")
+
     else:
-    
+
         st.info(
             "Click Generate Engineering Analysis"
         )
