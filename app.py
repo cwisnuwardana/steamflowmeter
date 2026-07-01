@@ -454,8 +454,8 @@ The table below compares all available S435 meter sizes based on the current ope
             
         """)
         
-else:
-
-    st.info(
-        "Click Generate Engineering Analysis"
-)
+    else:
+    
+        st.info(
+            "Click Generate Engineering Analysis"
+    )
