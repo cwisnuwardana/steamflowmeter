@@ -110,6 +110,7 @@ dn = st.sidebar.selectbox(
     "Pipe Size",
 
     [
+        "DN25",
         "DN50",
         "DN65",
         "DN80",
