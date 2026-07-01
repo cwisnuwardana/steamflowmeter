@@ -63,12 +63,12 @@ def compare_meters(
     )
 
     result = []
-    for _, row in db.iterrows():
-
-    utilization = round(
-        actual_flow / row["Max_tph"] * 100,
-        1
-    )
+        for _, row in db.iterrows():
+    
+        utilization = round(
+            actual_flow / row["Max_tph"] * 100,
+            1
+        )
 
     if actual_flow < row["Min_tph"]:
 
@@ -108,5 +108,5 @@ def compare_meters(
 
     })
 
-return pd.DataFrame(result)
+    return pd.DataFrame(result)
    
