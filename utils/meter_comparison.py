@@ -8,6 +8,10 @@ flow_db = pd.read_excel(
     "data/S435_Flow_Range_Database.xlsx"
 )
 
+# ======================================================
+# CLEAN DATABASE
+# ======================================================
+
 flow_db.columns = flow_db.columns.str.strip()
 
 flow_db["Pressure_MPa"] = pd.to_numeric(
@@ -36,22 +40,15 @@ flow_db["DN"] = (
 # METER COMPARISON
 # ======================================================
 
-def compare_meters(
-    pressure,
-    actual_flow
-):
+def compare_meters(pressure, actual_flow):
 
     pressure = float(pressure)
-
     actual_flow = float(actual_flow)
 
-    # ==========================================
-    # Nearest Pressure
-    # ==========================================
-
+    # Cari pressure terdekat
     nearest_pressure = min(
         flow_db["Pressure_MPa"].dropna().unique(),
-        key=lambda x: abs(x-pressure)
+        key=lambda x: abs(x - pressure)
     )
 
     db = flow_db[
@@ -63,50 +60,50 @@ def compare_meters(
     )
 
     result = []
-        for _, row in db.iterrows():
-    
+
+    for _, row in db.iterrows():
+
         utilization = round(
             actual_flow / row["Max_tph"] * 100,
             1
         )
 
-    if actual_flow < row["Min_tph"]:
+        if actual_flow < row["Min_tph"]:
 
-        status = "🔴 Oversized"
-        note = "Actual flow below minimum measurable range."
+            status = "🔴 Oversized"
+            note = "Actual flow below minimum measurable range."
 
-    elif utilization < 20:
+        elif utilization < 20:
 
-        status = "🟡 Acceptable"
-        note = "Measurement possible but low utilization."
+            status = "🟡 Acceptable"
+            note = "Measurement possible but low utilization."
 
-    elif utilization < 80:
+        elif utilization < 80:
 
-        status = "🟢 Recommended"
-        note = "Good measuring range."
+            status = "🟢 Recommended"
+            note = "Good measuring range."
 
-    else:
+        else:
 
-        status = "🟠 Near Maximum"
-        note = "Close to maximum measuring range."
+            status = "🟠 Near Maximum"
+            note = "Close to maximum measuring range."
 
-    result.append({
+        result.append({
 
-        "Meter": row["DN"],
+            "Meter": row["DN"],
 
-        "Min Flow (t/h)": round(row["Min_tph"], 2),
+            "Min Flow (t/h)": round(row["Min_tph"], 2),
 
-        "Max Flow (t/h)": round(row["Max_tph"], 2),
+            "Max Flow (t/h)": round(row["Max_tph"], 2),
 
-        "Actual Flow (t/h)": round(actual_flow, 2),
+            "Actual Flow (t/h)": round(actual_flow, 2),
 
-        "Utilization (%)": utilization,
+            "Utilization (%)": utilization,
 
-        "Status": status,
+            "Status": status,
 
-        "Engineering Note": note
+            "Engineering Note": note
 
-    })
+        })
 
     return pd.DataFrame(result)
-   
