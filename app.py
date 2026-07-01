@@ -401,13 +401,13 @@ with tab8:
 
         st.info(f"""
 
-**Operating Pressure :** {pressure:.2f} MPa
-
-**Actual Steam Flow :** {actual_flow:.2f} t/h
-
-The table below compares all available S435 meter sizes based on the current operating condition.
-
-""")
+        **Operating Pressure :** {pressure:.2f} MPa
+        
+        **Actual Steam Flow :** {actual_flow:.2f} t/h
+        
+        The table below compares all available S435 meter sizes based on the current operating condition.
+        
+        """)
 
         st.dataframe(
 
