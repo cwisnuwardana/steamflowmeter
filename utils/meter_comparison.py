@@ -45,7 +45,6 @@ def compare_meters(pressure, actual_flow):
     pressure = float(pressure)
     actual_flow = float(actual_flow)
 
-    # Cari pressure terdekat
     nearest_pressure = min(
         flow_db["Pressure_MPa"].dropna().unique(),
         key=lambda x: abs(x - pressure)
@@ -55,9 +54,7 @@ def compare_meters(pressure, actual_flow):
         flow_db["Pressure_MPa"] == nearest_pressure
     ].copy()
 
-    db = db.sort_values(
-        by="Min_tph"
-    )
+    db = db.sort_values(by="Min_tph")
 
     result = []
 
@@ -68,42 +65,42 @@ def compare_meters(pressure, actual_flow):
             1
         )
 
-if actual_flow < row["Min_tph"]:
+        if actual_flow < row["Min_tph"]:
 
-    status = "🔴 Oversized"
-    note = "Actual flow is below the minimum measurable flow."
+            status = "🔴 Oversized"
+            note = "Actual flow is below the minimum measurable flow."
 
-elif actual_flow <= row["Max_tph"]:
+        elif actual_flow <= row["Max_tph"]:
 
-        if utilization >= 60:
-        
-            status = "🟢 Best Choice"
-            note = "Excellent measuring range."
-    
-        elif utilization >= 30:
-    
-            status = "🟢 Recommended"
-            note = "Good measuring range."
-    
+            if utilization >= 60:
+
+                status = "🟢 Best Choice"
+                note = "Excellent measuring range."
+
+            elif utilization >= 30:
+
+                status = "🟢 Recommended"
+                note = "Good measuring range."
+
+            else:
+
+                status = "🟢 Recommended"
+                note = "Flow is inside measuring range. Low utilization but acceptable."
+
         else:
-    
-            status = "🟢 Recommended"
-            note = "Flow is inside measuring range. Low utilization but acceptable."
-        
-        else:
-        
+
             status = "🟠 Undersized"
-            note = "Actual flow exceeds maximum measuring range."
+            note = "Actual flow exceeds maximum measurable flow."
 
         result.append({
 
             "Meter": row["DN"],
 
-            "Min Flow (t/h)": round(row["Min_tph"], 2),
+            "Min Flow (t/h)": round(row["Min_tph"], 3),
 
-            "Max Flow (t/h)": round(row["Max_tph"], 2),
+            "Max Flow (t/h)": round(row["Max_tph"], 3),
 
-            "Actual Flow (t/h)": round(actual_flow, 2),
+            "Actual Flow (t/h)": round(actual_flow, 3),
 
             "Utilization (%)": utilization,
 
