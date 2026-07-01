@@ -444,18 +444,18 @@ The table below compares all available S435 meter sizes based on the current ope
         
         """)
         
-                else:
+        else:
         
-                    st.error("""
+            st.error("""
+    
+            ⚠ No suitable S435 meter found.
+            
+            Please review operating pressure or steam flow.
+            
+            """)
         
-        ⚠ No suitable S435 meter found.
+        else:
         
-        Please review operating pressure or steam flow.
-        
-        """)
-        
-            else:
-        
-                st.info(
-                    "Click Generate Engineering Analysis"
-                )
+            st.info(
+                "Click Generate Engineering Analysis"
+            )
