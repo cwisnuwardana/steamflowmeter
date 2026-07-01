@@ -207,6 +207,7 @@ if os.path.exists(PRODUCT):
 # ==========================================================
 
 result = None
+comparison = None 
 
 if generate:
 
@@ -430,19 +431,18 @@ The table below compares all available S435 meter sizes based on the current ope
 
             best = recommended.iloc[0]
 
-            st.success(f"""
-
+        st.success(f"""
         ### ✅ Best Recommended Meter
         
-        **Meter :** {best['Meter']}
+        **Meter :** 
+        {best['Meter']}
         
         **Flow Range :**
         {best['Min Flow (t/h)']} – {best['Max Flow (t/h)']} t/h
         
         **Engineering Note :**
         {best['Engineering Note']}
-        
-        """)
+                """)
         
         else:
         
@@ -458,4 +458,4 @@ The table below compares all available S435 meter sizes based on the current ope
     
         st.info(
             "Click Generate Engineering Analysis"
-    )
+        )
