@@ -1,6 +1,7 @@
 import streamlit as st
 from PIL import Image
 from utils.meter_comparison import compare_meters
+from utils.installation_note import notes
 import os
 
 from utils.analyzer import analyze_installation
@@ -159,11 +160,18 @@ disturbance = st.sidebar.selectbox(
     "Nearest Upstream Disturbance",
 
     [
-        "Tee",
-        "90° Elbow",
-        "2 × 90° Elbow",
-        "Reducer",
+        "Straight Pipe",
+
         "Flange",
+
+        "Reducer",
+
+        "90° Elbow",
+
+        "2 × 90° Elbow",
+
+        "Valve",
+
         "Two Elbows on Different Plane"
     ]
 
