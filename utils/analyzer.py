@@ -13,7 +13,17 @@ import pandas as pd
 
 installation_rules = {
 
-    "Tee": {
+    "Straight Pipe": {
+        "upstream": 10,
+        "downstream": 5
+    },
+
+    "Flange": {
+        "upstream": 10,
+        "downstream": 5
+    },
+
+    "Reducer": {
         "upstream": 15,
         "downstream": 5
     },
@@ -24,17 +34,12 @@ installation_rules = {
     },
 
     "2 × 90° Elbow": {
+        "upstream": 30,
+        "downstream": 5
+    },
+
+    "Valve": {
         "upstream": 35,
-        "downstream": 5
-    },
-
-    "Reducer": {
-        "upstream": 20,
-        "downstream": 5
-    },
-
-    "Flange": {
-        "upstream": 10,
         "downstream": 5
     },
 
@@ -44,7 +49,6 @@ installation_rules = {
     }
 
 }
-
 
 # ==========================================================
 # ANALYZE INSTALLATION
