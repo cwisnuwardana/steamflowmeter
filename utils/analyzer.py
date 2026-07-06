@@ -5,6 +5,7 @@ from utils.recommendation import get_recommendation
 from utils.meter_selector import recommend_meter
 from utils.engineering_score import calculate_engineering_score
 from utils.velocity_calculator import calculate_velocity
+from utils.pipe_optimizer import optimize_pipe
 
 import pandas as pd
 
@@ -171,10 +172,24 @@ def analyze_installation(
     # METER RECOMMENDATION
     # ==========================================
     
-    #meter = recommend_meter(
-    #    pressure,
-    #    actual_flow
-    #)
+    meter = recommend_meter(
+        pressure,
+        actual_flow
+    )
+
+    # ==========================================
+    # PIPE OPTIMIZATION
+    # ==========================================
+    
+    pipe_optimization = optimize_pipe(
+    
+        pressure,
+    
+        actual_flow,
+    
+        schedule
+    
+    )
     
     # ==========================================
     # RECOMMENDATION
@@ -224,9 +239,9 @@ def analyze_installation(
     
         "flow": flow,
     
-        #"meter": meter,
+        "meter": meter,
 
-        #"engineering_score": engineering_score,
+        "engineering_score": engineering_score,
     
         "flow_status": flow_status,
     
@@ -240,6 +255,8 @@ def analyze_installation(
     
         "required_downstream": round(required_downstream,1),
     
-        "recommendation": recommendation
+        "recommendation": recommendation,
+
+        "pipe_optimization": pipe_optimization
     
     }
