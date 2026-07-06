@@ -215,17 +215,17 @@ def analyze_installation(
     # ENGINEERING SCORE
     # ==========================================
     
-    #engineering_score = calculate_engineering_score(
+    engineering_score = calculate_engineering_score(
     
-    #    customer_steam,
+        customer_steam,
     
-    #    calculated_steam,
+        calculated_steam,
     
-    #    installation_status,
+        installation_status,
     
-    #    flow_status
+        flow_status
     
-    #)
+    )
     
     # ==========================================
     # RETURN
