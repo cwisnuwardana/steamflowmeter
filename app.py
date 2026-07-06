@@ -584,9 +584,9 @@ with tab6:
             st.success(r)
     else:
 
-    st.info(
-        "Click **Generate Engineering Analysis**"
-    )
+        st.info(
+            "Click **Generate Engineering Analysis**"
+        )
     
 with tab7:
 
