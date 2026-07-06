@@ -149,9 +149,9 @@ def optimize_pipe(
 
             })
 
-        except:
+        except Exception as e:
 
-            pass
+            raise e
 
     df = pd.DataFrame(result)
 
