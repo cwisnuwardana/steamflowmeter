@@ -382,7 +382,7 @@ with tab5:
     if result:
 
         # ==========================================
-        # Installation Image
+        # Reference Installation Drawing
         # ==========================================
 
         image_path = image_map.get(disturbance)
@@ -401,13 +401,18 @@ with tab5:
         # Installation Requirement
         # ==========================================
 
-        col1, col2, col3 = st.columns(3)
+        col1, col2 = st.columns(2)
 
         with col1:
 
             st.metric(
                 "Required Upstream",
                 f'{result["required_upstream"]:.0f} mm'
+            )
+
+            st.metric(
+                "Available Upstream",
+                f"{upstream:.0f} mm"
             )
 
         with col2:
@@ -417,45 +422,47 @@ with tab5:
                 f'{result["required_downstream"]:.0f} mm'
             )
 
-        with col3:
-
             st.metric(
-                "Installation Status",
-                result["installation_status"]
+                "Available Downstream",
+                f"{downstream:.0f} mm"
             )
 
         st.divider()
 
         # ==========================================
-        # Engineering Note
-        # ==========================================
-
-        st.subheader("Engineering Note")
-
-        st.info(
-            notes[disturbance]
-        )
-
-        # ==========================================
-        # PASS / FAIL
+        # Installation Status
         # ==========================================
 
         if result["installation_status"] == "PASS":
 
             st.success(
-                "Installation complies with SUTO installation recommendation."
+                "✅ Installation complies with the SUTO installation recommendation."
             )
 
         else:
 
             st.error(
-                "Installation does NOT comply with the required straight pipe length."
+                "❌ Installation does NOT comply with the minimum straight pipe requirement."
             )
+
+        st.divider()
+
+        # ==========================================
+        # Engineering Guidance
+        # ==========================================
+
+        st.subheader(
+            notes[disturbance]["title"]
+        )
+
+        st.info(
+            notes[disturbance]["note"]
+        )
 
     else:
 
         st.info(
-            "Click Generate Engineering Analysis"
+            "Click **Generate Engineering Analysis**"
         )
 
 with tab6:
