@@ -4,6 +4,7 @@ from utils.steam_lookup import get_steam_property
 from utils.recommendation import get_recommendation
 from utils.meter_selector import recommend_meter
 from utils.engineering_score import calculate_engineering_score
+from utils.velocity_calculator import calculate_velocity
 
 import pandas as pd
 
