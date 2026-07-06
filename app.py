@@ -248,6 +248,29 @@ if generate:
         actual_flow
 
     )
+
+# ==========================================================
+# INSTALLATION IMAGE MAP
+# ==========================================================
+
+image_map = {
+
+    "Straight Pipe": "assets/pipe_installation/straight.png",
+
+    "Flange": "assets/pipe_installation/flange.png",
+
+    "Reducer": "assets/pipe_installation/reducer.png",
+
+    "90° Elbow": "assets/pipe_installation/elbow90.png",
+
+    "2 × 90° Elbow": "assets/pipe_installation/elbow90x2.png",
+
+    "Valve": "assets/pipe_installation/valve.png",
+
+    "Two Elbows on Different Plane": "assets/pipe_installation/two_plane.png"
+
+}
+
 # ==========================================================
 # TAB
 # ==========================================================
@@ -354,29 +377,86 @@ with tab4:
 
 with tab5:
 
-    st.header("Installation")
+    st.header("📏 Installation Assessment")
 
     if result:
+
+        # ==========================================
+        # Installation Image
+        # ==========================================
+
+        image_path = image_map.get(disturbance)
+
+        if image_path and os.path.exists(image_path):
+
+            st.image(
+                image_path,
+                caption=f"Reference Installation - {disturbance}",
+                use_container_width=True
+            )
+
+        st.divider()
+
+        # ==========================================
+        # Installation Requirement
+        # ==========================================
 
         col1, col2, col3 = st.columns(3)
 
         with col1:
+
             st.metric(
                 "Required Upstream",
                 f'{result["required_upstream"]:.0f} mm'
             )
 
         with col2:
+
             st.metric(
                 "Required Downstream",
                 f'{result["required_downstream"]:.0f} mm'
             )
 
         with col3:
+
             st.metric(
-                "Status",
+                "Installation Status",
                 result["installation_status"]
             )
+
+        st.divider()
+
+        # ==========================================
+        # Engineering Note
+        # ==========================================
+
+        st.subheader("Engineering Note")
+
+        st.info(
+            notes[disturbance]
+        )
+
+        # ==========================================
+        # PASS / FAIL
+        # ==========================================
+
+        if result["installation_status"] == "PASS":
+
+            st.success(
+                "Installation complies with SUTO installation recommendation."
+            )
+
+        else:
+
+            st.error(
+                "Installation does NOT comply with the required straight pipe length."
+            )
+
+    else:
+
+        st.info(
+            "Click Generate Engineering Analysis"
+        )
 
 with tab6:
 
