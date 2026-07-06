@@ -32,7 +32,9 @@ steam_db.columns = [
 
     "Latent_Heat_kcal",
 
-    "Specific_Heat"
+    "Specific_Heat",
+
+    "Dynamic_Viscosity_Pa_s"
 
 ]
 
@@ -53,17 +55,19 @@ def get_steam_property(pressure):
     row = row.iloc[0]
 
     return {
-
+    
         "boiling_point": float(row["Boiling_Point"]),
-
+    
         "specific_volume": float(row["Specific_Volume"]),
-
+    
         "density": float(row["Density"]),
-
+    
         "enthalpy": float(row["Steam_Enthalpy_kJ"]),
-
+    
         "latent_heat": float(row["Latent_Heat_kJ"]),
-
-        "specific_heat": float(row["Specific_Heat"])
-
+    
+        "specific_heat": float(row["Specific_Heat"]),
+    
+        "viscosity": float(row["Dynamic_Viscosity_Pa_s"])
+    
     }
