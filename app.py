@@ -275,26 +275,18 @@ image_map = {
 # TAB
 # ==========================================================
 
-tab1, tab2, tab3, tab4, tab5, tab6, tab7, tab8 = st.tabs(
+tab1, tab2, tab3, tab4, tab5, tab6, tab7, tab8, tab9 = st.tabs(
 
     [
-
         "📊 Summary",
-
         "📐 Pipe",
-
         "🔥 Steam",
-
         "📈 Flow",
-
         "📏 Installation",
-
+        "⚙ Pipe Optimization",
         "💡 Recommendation",
-
         "📚 Methodology",
-
         "📊 Meter Comparison"
-
     ]
 
 )
@@ -554,6 +546,30 @@ with tab5:
 
 with tab6:
 
+    st.header("⚙ Pipe Optimization")
+
+    if result:
+
+        optimization = result["pipe_optimization"]
+
+        st.dataframe(
+
+            optimization,
+
+            use_container_width=True,
+
+            hide_index=True
+
+        )
+
+    else:
+
+        st.info(
+            "Click **Generate Engineering Analysis**"
+        )
+
+with tab7:
+
     st.header("Engineering Recommendation")
 
     if result:
@@ -588,7 +604,7 @@ with tab6:
             "Click **Generate Engineering Analysis**"
         )
     
-with tab7:
+with tab8:
 
     st.header("Engineering Methodology")
 
@@ -604,7 +620,7 @@ with tab7:
 7. Generate engineering recommendation.
 """)
 
-with tab8:
+with tab9:
 
     st.header("S435 Meter Selection")
 
