@@ -353,28 +353,115 @@ with tab1:
 
 with tab2:
 
-    st.header("Pipe Information")
-    
+    st.header("📐 Pipe Information")
+
     if result:
-    
-        st.write(result["pipe"])
+
+        pipe = result["pipe"]
+
+        col1, col2, col3, col4 = st.columns(4)
+
+        with col1:
+            st.metric("Pipe Size", pipe["dn"])
+
+        with col2:
+            st.metric("Outside Diameter", f'{pipe["od"]:.2f} mm')
+
+        with col3:
+            st.metric("Wall Thickness", f'{pipe["thickness"]:.2f} mm')
+
+        with col4:
+            st.metric("Inside Diameter", f'{pipe["id"]:.2f} mm')
 
 with tab3:
 
-    st.header("Steam Property")
+    st.header("🔥 Steam Property")
 
     if result:
 
-        st.write(result["steam"])
+        steam = result["steam"]
+
+        col1, col2, col3 = st.columns(3)
+
+        with col1:
+
+            st.metric(
+                "Boiling Point",
+                f'{steam["boiling_point"]:.2f} °C'
+            )
+
+            st.metric(
+                "Density",
+                f'{steam["density"]:.3f} kg/m³'
+            )
+
+        with col2:
+
+            st.metric(
+                "Specific Volume",
+                f'{steam["specific_volume"]:.3f} m³/kg'
+            )
+
+            st.metric(
+                "Specific Heat",
+                f'{steam["specific_heat"]:.3f} kJ/kg·K'
+            )
+
+        with col3:
+
+            st.metric(
+                "Steam Enthalpy",
+                f'{steam["enthalpy"]:.1f} kJ/kg'
+            )
+
+            st.metric(
+                "Latent Heat",
+                f'{steam["latent_heat"]:.1f} kJ/kg'
+            )
+
+    else:
+
+        st.info(
+            "Click **Generate Engineering Analysis**"
+        )
 
 with tab4:
 
-    st.header("Flow Range")
+    st.header("📈 Flow Range")
 
     if result:
 
-        st.write(result["flow"])
+        flow = result["flow"]
 
+        col1, col2, col3 = st.columns(3)
+
+        with col1:
+
+            st.metric(
+                "Pressure Used",
+                f'{flow["pressure_used"]:.2f} MPa'
+            )
+
+        with col2:
+
+            st.metric(
+                "Minimum Flow",
+                f'{flow["min_flow"]:.3f} t/h'
+            )
+
+        with col3:
+
+            st.metric(
+                "Maximum Flow",
+                f'{flow["max_flow"]:.3f} t/h'
+            )
+
+    else:
+
+        st.info(
+            "Click **Generate Engineering Analysis**"
+        )
+        
 with tab5:
 
     st.header("📏 Installation Assessment")
@@ -471,8 +558,36 @@ with tab6:
 
     if result:
 
-        st.success(result["recommendation"])
+        rec = result["recommendation"]
 
+        st.subheader(
+            rec["overall"]
+        )
+        
+        st.metric(
+            "Severity",
+            rec["severity"]
+        )
+        
+        st.divider()
+        
+        st.subheader("Warnings")
+        
+        for w in rec["warnings"]:
+        
+            st.warning(w)
+        
+        st.subheader("Engineering Recommendations")
+        
+        for r in rec["recommendations"]:
+        
+            st.success(r)
+    else:
+
+    st.info(
+        "Click **Generate Engineering Analysis**"
+    )
+    
 with tab7:
 
     st.header("Engineering Methodology")
