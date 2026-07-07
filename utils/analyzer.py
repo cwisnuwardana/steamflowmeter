@@ -7,6 +7,7 @@ from utils.engineering_score import calculate_engineering_score
 from utils.velocity_calculator import calculate_velocity
 from utils.pipe_optimizer import optimize_pipe
 from utils.spool_designer import design_spool
+from utils.hydraulic_assessment import hydraulic_assessment
 
 import pandas as pd
 
@@ -210,6 +211,16 @@ def analyze_installation(
         required_downstream
 
     )
+
+    hydraulic = hydraulic_assessment(
+
+        operating_pressure_bar=pressure,
+    
+        pressure_drop_bar_per_m=pipe_optimization.iloc[0]["Pressure Drop (bar/m)"],
+    
+        spool_length_mm=spool["total_length"]
+
+    )
     
     # ==========================================
     # RECOMMENDATION
@@ -281,6 +292,8 @@ def analyze_installation(
 
         "pipe_optimization": pipe_optimization,
 
-        "spool": spool
+        "spool": spool,
+
+        "hydraulic": hydraulic
     
     }
