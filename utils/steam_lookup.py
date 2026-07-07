@@ -45,8 +45,14 @@ steam_db.columns = [
 
 def get_steam_property(pressure):
 
+    # ==========================================
+    # Convert MPa (App) → bar (Steam Table)
+    # ==========================================
+
+    pressure_bar = round(pressure * 10, 1)
+
     row = steam_db[
-        steam_db["Pressure"] == pressure
+        steam_db["Pressure"] == pressure_bar
     ]
 
     if row.empty:
@@ -55,19 +61,19 @@ def get_steam_property(pressure):
     row = row.iloc[0]
 
     return {
-    
+
         "boiling_point": float(row["Boiling_Point"]),
-    
+
         "specific_volume": float(row["Specific_Volume"]),
-    
+
         "density": float(row["Density"]),
-    
+
         "enthalpy": float(row["Steam_Enthalpy_kJ"]),
-    
+
         "latent_heat": float(row["Latent_Heat_kJ"]),
-    
+
         "specific_heat": float(row["Specific_Heat"]),
-    
+
         "viscosity": float(row["Dynamic_Viscosity_Pa_s"])
-    
+
     }
