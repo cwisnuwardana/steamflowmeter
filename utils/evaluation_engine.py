@@ -15,6 +15,8 @@ def evaluate_pipe(
 
     optimization = result["pipe_optimization"]
 
+    best = optimization.iloc[0]
+    
     selected = optimization[
         optimization["DN"] == selected_dn
     ].iloc[0]
