@@ -572,6 +572,24 @@ with tab6:
         with col4:
             st.metric("Flow Status", best["Flow Status"])
 
+        # ==========================================
+        # ENGINEERING INTERPRETATION
+        # ==========================================
+        
+        velocity = best["Velocity (m/s)"]
+        
+        if 10 <= velocity <= 35:
+            velocity_note = "ideal"
+        
+        elif 5 <= velocity < 10:
+            velocity_note = "acceptable"
+        
+        elif 35 < velocity <= 45:
+            velocity_note = "slightly high"
+        
+        else:
+            velocity_note = "outside the recommended range"
+        
         conclusion = f"""
         ### ✅ Engineering Conclusion
         
