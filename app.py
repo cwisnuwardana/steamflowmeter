@@ -609,6 +609,24 @@ with tab6:
         
         st.divider()
 
+        st.subheader("📐 Spool Design")
+        
+        spool = result["spool"]
+        
+        col1, col2, col3 = st.columns(3)
+        
+        with col1:
+            st.metric("Reducer", f'{spool["reducer_length"]} mm')
+            st.metric("Upstream", f'{spool["upstream"]:.0f} mm')
+        
+        with col2:
+            st.metric("S435", f'{spool["meter_length"]} mm')
+            st.metric("Downstream", f'{spool["downstream"]:.0f} mm')
+        
+        with col3:
+            st.metric("Expander", f'{spool["expander_length"]} mm')
+            st.metric("Total Spool", f'{spool["total_length"]:.0f} mm')
+
         # ===============================
         # RANKING TABLE
         # ===============================
