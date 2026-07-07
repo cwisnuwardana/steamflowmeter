@@ -192,6 +192,8 @@ def analyze_installation(
     
     )
 
+    best_pipe = pipe_optimization.iloc[0]["DN"]
+    
     spool = design_spool(
 
         dn,
