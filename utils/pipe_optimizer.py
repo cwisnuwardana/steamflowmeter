@@ -57,6 +57,12 @@ def optimize_pipe(
                 dn
             )
 
+            print("========================")
+            print("DN          :", dn)
+            print("Flow        :", actual_flow)
+            print("Density     :", density)
+            print("Pipe ID     :", pipe["id"])
+            
             velocity = calculate_velocity(
 
                 actual_flow,
@@ -66,7 +72,9 @@ def optimize_pipe(
                 pipe["id"]
 
             )
-
+            
+            print("Velocity    :", velocity["velocity"])
+            
             reynolds = calculate_reynolds(
 
                 density,
