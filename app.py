@@ -6,6 +6,7 @@ from utils.spool_designer import design_spool
 from utils.svg_spool import generate_svg_spool
 from utils.spool_designer import design_spool
 from utils.hydraulic_assessment import hydraulic_assessment
+from utils.evaluation_engine import evaluate_pipe
 import os
 
 from utils.analyzer import analyze_installation
@@ -224,9 +225,6 @@ if "result" not in st.session_state:
 
 if "comparison" not in st.session_state:
     st.session_state.comparison = None
-
-result = None
-comparison = None 
 
 if generate:
 
