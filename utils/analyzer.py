@@ -190,6 +190,18 @@ def analyze_installation(
         schedule
     
     )
+
+    spool = design_spool(
+
+        dn,
+    
+        meter["recommended_dn"],
+    
+        required_upstream,
+    
+        required_downstream
+
+    )
     
     # ==========================================
     # RECOMMENDATION
@@ -257,6 +269,8 @@ def analyze_installation(
     
         "recommendation": recommendation,
 
-        "pipe_optimization": pipe_optimization
+        "pipe_optimization": pipe_optimization,
+
+        "spool": spool
     
     }
