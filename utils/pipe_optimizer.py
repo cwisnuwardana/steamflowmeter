@@ -57,13 +57,17 @@ def optimize_pipe(
                 dn
             )
 
-            print("========================")
-            print("DN          :", dn)
-            print("Flow        :", actual_flow)
-            print("Density     :", density)
-            print("Pipe ID     :", pipe["id"])
-            print(type(actual_flow))
-            print(actual_flow)
+            #print("========================")
+            #print("DN          :", dn)
+            #print("Flow        :", actual_flow)
+            #print("Density     :", density)
+            #print("Pipe ID     :", pipe["id"])
+            #print(type(actual_flow))
+            #print(actual_flow)
+
+            #new revision
+            
+            
             
             velocity = calculate_velocity(
 
@@ -142,21 +146,31 @@ def optimize_pipe(
                 score += 10
 
             result.append({
-
+            
                 "DN": dn,
-
+            
+                "Density (kg/m³)": round(
+                    density, 3
+                ),
+            
+                "Pipe ID (mm)": round(
+                    pipe["id"], 2
+                ),
+            
+                "Actual Flow (t/h)": actual_flow,
+            
                 "Velocity (m/s)": round(
                     velocity["velocity"], 2
                 ),
-
+            
                 "Reynolds": int(
                     reynolds["reynolds"]
                 ),
-
+            
                 "Flow Status": flow_status,
-
+            
                 "Engineering Score": score
-
+            
             })
 
         except Exception as e:
