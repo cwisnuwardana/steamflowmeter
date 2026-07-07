@@ -677,11 +677,8 @@ with tab6:
         with col4:
 
             st.metric(
-        
                 "Operating Pressure",
-        
-                f"{pressure:.2f} bar"
-        
+                f'{hydraulic["operating_pressure"]:.2f} bar'
             )
         
         if hydraulic["status"] == "Negligible":
