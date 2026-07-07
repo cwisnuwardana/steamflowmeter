@@ -551,9 +551,7 @@ with tab6:
     if result:
 
         optimization = result["pipe_optimization"]
-        
-        st.write(optimization)
-        
+                
         st.dataframe(
         
             optimization,
