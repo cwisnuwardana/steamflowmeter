@@ -731,7 +731,7 @@ with tab6:
         This represents only
         **{hydraulic["loss_ratio"]:.2f}%**
         of the operating pressure
-        (**{pressure:.2f} bar**).
+        (**{hydraulic["operating_pressure"]:.2f} bar**).
         
         Therefore, the proposed spool is
         considered hydraulically acceptable
