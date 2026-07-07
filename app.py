@@ -563,14 +563,12 @@ with tab6:
 
         optimization = result["pipe_optimization"]
 
-        #selected_dn = st.selectbox(
-
-        #    "🛠 Engineering Evaluation",
-        
-        #    optimization["DN"].tolist(),
-
-        #    key="selected_dn"
-        #)
+        selected_dn = st.radio(
+            "🛠 Engineering Evaluation",
+            optimization["DN"].tolist(),
+            horizontal=True,
+            key="selected_dn"
+        )
                 
         # ===============================
         # BEST PIPE
@@ -582,12 +580,77 @@ with tab6:
         #    optimization["DN"] == selected_dn
         #].iloc[0]
 
-        best = optimization.iloc[0]
+        #best = optimization.iloc[0]
 
-        selected = best
+        #selected = best
+        
+        #col1, col2, col3, col4, col5 = st.columns(5)
+
+        #with col1:
+            st.metric("🏆 Recommended", best["DN"])
+        
+        #with col2:
+            st.metric("🔧 Evaluated", selected["DN"])
+        
+        #with col3:
+            st.metric("Score", selected["Engineering Score"])
+        
+        #with col4:
+            st.metric("Velocity", f'{selected["Velocity (m/s)"]:.2f} m/s')
+        
+        #with col5:
+            st.metric("Flow Status", selected["Flow Status"])
+        # ==========================================
+        # ENGINEERING INTERPRETATION
+        # ==========================================
+        
+        #velocity = selected["Velocity (m/s)"]
+        
+        #if 10 <= velocity <= 35:
+            velocity_note = "ideal"
+        
+        #elif 5 <= velocity < 10:
+            velocity_note = "acceptable"
+        
+        #elif 35 < velocity <= 45:
+            velocity_note = "slightly high"
+        
+        #else:
+            velocity_note = "outside the recommended range"
+
+        # ===============================
+        # ENGINEERING EVALUATION Rev 7/7
+        # ===============================
+        
+        evaluation = evaluate_pipe(
+        
+            result,
+        
+            dn,
+        
+            selected_dn,
+        
+            pressure
+        
+        )
+        
+        best = evaluation["best"]
+        
+        selected = evaluation["selected"]
+        
+        spool = evaluation["spool"]
+        
+        hydraulic = evaluation["hydraulic"]
+        
+        velocity_note = evaluation["velocity_note"]
+        
+        
+        # ===============================
+        # METRICS
+        # ===============================
         
         col1, col2, col3, col4, col5 = st.columns(5)
-
+        
         with col1:
             st.metric("🏆 Recommended", best["DN"])
         
@@ -598,27 +661,16 @@ with tab6:
             st.metric("Score", selected["Engineering Score"])
         
         with col4:
-            st.metric("Velocity", f'{selected["Velocity (m/s)"]:.2f} m/s')
+            st.metric(
+                "Velocity",
+                f'{selected["Velocity (m/s)"]:.2f} m/s'
+            )
         
         with col5:
-            st.metric("Flow Status", selected["Flow Status"])
-        # ==========================================
-        # ENGINEERING INTERPRETATION
-        # ==========================================
-        
-        velocity = selected["Velocity (m/s)"]
-        
-        if 10 <= velocity <= 35:
-            velocity_note = "ideal"
-        
-        elif 5 <= velocity < 10:
-            velocity_note = "acceptable"
-        
-        elif 35 < velocity <= 45:
-            velocity_note = "slightly high"
-        
-        else:
-            velocity_note = "outside the recommended range"
+            st.metric(
+                "Flow Status",
+                selected["Flow Status"]
+            )
         
         conclusion = f"""
         ### ✅ Engineering Evaluation
@@ -646,27 +698,27 @@ with tab6:
         # GET SPOOL DATA
         # ======================================
         
-        spool = design_spool(
+        #spool = design_spool(
         
-            dn,                    # Existing pipe
+        #    dn,                    # Existing pipe
         
-            selected["DN"],        # Pipe yang sedang dievaluasi
+        #    selected["DN"],        # Pipe yang sedang dievaluasi
         
-            result["required_upstream"],
+        #    result["required_upstream"],
         
-            result["required_downstream"]
+        #    result["required_downstream"]
         
-        )
+        #)
 
-        hydraulic = hydraulic_assessment(
+        #hydraulic = hydraulic_assessment(
 
-            operating_pressure_bar=pressure,
+        #    operating_pressure_bar=pressure,
         
-            pressure_drop_bar_per_m=selected["Pressure Drop (bar/m)"],
+        #    pressure_drop_bar_per_m=selected["Pressure Drop (bar/m)"],
         
-            spool_length_mm=spool["total_length"]
+        #    spool_length_mm=spool["total_length"]
         
-        )
+        #)
         
         # ======================================
         # DRAW SVG
