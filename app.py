@@ -576,12 +576,16 @@ with tab6:
         # BEST PIPE
         # ===============================
 
-        best = optimization.iloc[0]
+        #best = optimization.iloc[0]
         
-        selected = optimization[
-            optimization["DN"] == selected_dn
-        ].iloc[0]
+        #selected = optimization[
+        #    optimization["DN"] == selected_dn
+        #].iloc[0]
 
+        best = optimization.iloc[0]
+
+        selected = best
+        
         col1, col2, col3, col4, col5 = st.columns(5)
 
         with col1:
