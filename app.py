@@ -594,6 +594,7 @@ with tab6:
         ### ✅ Engineering Conclusion
         
         **{best["DN"]}** is recommended because the operating flow is within the SUTO S435 measuring range.
+        
         • Steam velocity = **{best["Velocity (m/s)"]:.2f} m/s**, classified as **{velocity_note}**, which falls within the recommended operating velocity range (10–35 m/s) for vortex flow measurement.
        
         • Reynolds number = **{best["Reynolds"]:,}**, indicating fully turbulent flow and ensuring stable vortex shedding.
