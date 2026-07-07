@@ -572,6 +572,16 @@ with tab6:
         with col4:
             st.metric("Flow Status", best["Flow Status"])
 
+        st.success(
+            """
+        **Engineering Conclusion**
+        
+        Recommended because the operating flow is within the S435 measuring range,
+        the steam velocity is in the ideal range, and the Reynolds number confirms
+        fully turbulent flow.
+        """
+        )
+        
         st.divider()
 
         # ===============================
