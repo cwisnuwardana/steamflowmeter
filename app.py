@@ -587,19 +587,19 @@ with tab6:
         #col1, col2, col3, col4, col5 = st.columns(5)
 
         #with col1:
-            st.metric("🏆 Recommended", best["DN"])
+        #    st.metric("🏆 Recommended", best["DN"])
         
         #with col2:
-            st.metric("🔧 Evaluated", selected["DN"])
+        #    st.metric("🔧 Evaluated", selected["DN"])
         
         #with col3:
-            st.metric("Score", selected["Engineering Score"])
+        #    st.metric("Score", selected["Engineering Score"])
         
         #with col4:
-            st.metric("Velocity", f'{selected["Velocity (m/s)"]:.2f} m/s')
+        #    st.metric("Velocity", f'{selected["Velocity (m/s)"]:.2f} m/s')
         
         #with col5:
-            st.metric("Flow Status", selected["Flow Status"])
+        #    st.metric("Flow Status", selected["Flow Status"])
         # ==========================================
         # ENGINEERING INTERPRETATION
         # ==========================================
@@ -607,16 +607,16 @@ with tab6:
         #velocity = selected["Velocity (m/s)"]
         
         #if 10 <= velocity <= 35:
-            velocity_note = "ideal"
+        #    velocity_note = "ideal"
         
         #elif 5 <= velocity < 10:
-            velocity_note = "acceptable"
+        #    velocity_note = "acceptable"
         
         #elif 35 < velocity <= 45:
-            velocity_note = "slightly high"
+        #    velocity_note = "slightly high"
         
         #else:
-            velocity_note = "outside the recommended range"
+        #    velocity_note = "outside the recommended range"
 
         # ===============================
         # ENGINEERING EVALUATION Rev 7/7
