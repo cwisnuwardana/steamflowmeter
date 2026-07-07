@@ -53,19 +53,13 @@ def calculate_pressure_drop(
     pressure_drop_bar = pressure_drop_pa / 100000
 
     return {
-
-        "friction_factor": round(friction_factor, 5),
-
-        "pressure_drop_pa": round(
-            pressure_drop_pa, 2
-        ),
-
-        "pressure_drop_kpa": round(
-            pressure_drop_kpa, 3
-        ),
-
-        "pressure_drop_bar": round(
-            pressure_drop_bar, 5
-        )
-
+    
+        "friction_factor": friction_factor,
+    
+        "pressure_drop_pa": pressure_drop_pa,
+    
+        "pressure_drop_kpa": pressure_drop_kpa,
+    
+        "pressure_drop_bar": pressure_drop_bar
+    
     }
