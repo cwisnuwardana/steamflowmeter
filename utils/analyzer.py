@@ -6,6 +6,7 @@ from utils.meter_selector import recommend_meter
 from utils.engineering_score import calculate_engineering_score
 from utils.velocity_calculator import calculate_velocity
 from utils.pipe_optimizer import optimize_pipe
+from utils.spool_designer import design_spool
 
 import pandas as pd
 
