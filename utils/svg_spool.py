@@ -139,7 +139,7 @@ SUTO
 
 <text
 x="{x2 + meter*scale/2 - 18:.1f}"
-y="188"
+y="220"
 font-size="18">
 S435
 </text>
@@ -207,9 +207,9 @@ stroke-width="8"/>
 Reducer
 </text>
 
-<text x="485" y="220" class="small">
-S435
-</text>
+#<text x="485" y="220" class="small">
+#S435
+#</text>
 
 <text x="790" y="220" class="small">
 Expander
