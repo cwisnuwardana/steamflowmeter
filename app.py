@@ -644,7 +644,7 @@ with tab6:
         
         with col3:
             st.metric("Expander", f'{spool["expander_length"]} mm')
-            st.metric("Total Spool", f'{spool["total_length"]:.0f} mm')
+            st.metric("Total Estimation Spool Length", f'{spool["total_length"]:.0f} mm')
         
         # ===============================
         # RANKING TABLE
