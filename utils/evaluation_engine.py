@@ -56,7 +56,9 @@ def evaluate_pipe(
         velocity_note = "outside the recommended range"
 
     return {
-
+        
+        "best": best,
+        
         "selected": selected,
 
         "spool": spool,
