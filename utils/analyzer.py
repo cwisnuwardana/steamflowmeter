@@ -197,9 +197,9 @@ def analyze_installation(
     spool = design_spool(
 
         dn,
-    
-        meter["recommended_dn"],
-    
+
+        best_pipe,
+               
         required_upstream,
     
         required_downstream
@@ -271,6 +271,8 @@ def analyze_installation(
         "required_downstream": round(required_downstream,1),
     
         "recommendation": recommendation,
+
+        "best_pipe": best_pipe,
 
         "pipe_optimization": pipe_optimization,
 
