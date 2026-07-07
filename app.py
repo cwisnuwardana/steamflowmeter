@@ -4,6 +4,8 @@ from utils.meter_comparison import compare_meters
 from utils.installation_note import notes
 from utils.spool_designer import design_spool
 from utils.svg_spool import generate_svg_spool
+from utils.spool_designer import design_spool
+from utils.hydraulic_assessment import hydraulic_assessment
 import os
 
 from utils.analyzer import analyze_installation
@@ -568,29 +570,28 @@ with tab6:
         # BEST PIPE
         # ===============================
 
+        best = optimization.iloc[0]
+        
         selected = optimization[
             optimization["DN"] == selected_dn
         ].iloc[0]
 
-        col1, col2, col3, col4 = st.columns(4)
+        col1, col2, col3, col4, col5 = st.columns(5)
 
         with col1:
-            st.metric("🏆 Best Pipe", selected["DN"])
+            st.metric("🏆 Recommended", best["DN"])
         
         with col2:
-            st.metric("Engineering Score", selected["Engineering Score"])
+            st.metric("🔧 Evaluated", selected["DN"])
         
         with col3:
-            st.metric(
-                "Velocity",
-                f'{selected["Velocity (m/s)"]:.2f} m/s'
-            )
+            st.metric("Score", selected["Engineering Score"])
         
         with col4:
-            st.metric(
-                "Flow Status",
-                selected["Flow Status"]
-            )
+            st.metric("Velocity", f'{selected["Velocity (m/s)"]:.2f} m/s')
+        
+        with col5:
+            st.metric("Flow Status", selected["Flow Status"])
         # ==========================================
         # ENGINEERING INTERPRETATION
         # ==========================================
@@ -610,17 +611,21 @@ with tab6:
             velocity_note = "outside the recommended range"
         
         conclusion = f"""
-        ### ✅ Engineering Conclusion
+        ### ✅ Engineering Evaluation
+
+        **Software Recommendation : {best["DN"]}**
+
+        **Current Engineering Evaluation : {selected["DN"]}**
         
-        **{selected["DN"]}** is recommended because the operating flow is within the SUTO S435 measuring range.
+        The selected pipe size **{selected["DN"]}** has been evaluated for the current operating condition.
         
-        • Steam velocity = **{best["Velocity (m/s)"]:.2f} m/s**, classified as **{velocity_note}**, which falls within the recommended operating velocity range (10–35 m/s) for vortex flow measurement.
-       
+        • Steam velocity = **{selected["Velocity (m/s)"]:.2f} m/s**, classified as **{velocity_note}**, which falls within the recommended operating velocity range (10–35 m/s) for vortex flow measurement.
+        
         • Reynolds number = **{selected["Reynolds"]:,}**, indicating fully turbulent flow and ensuring stable vortex shedding.
         
-        • This pipe size achieved the highest Engineering Score (**{selected["Engineering Score"]}/100**).
+        • Engineering Score = **{selected["Engineering Score"]}/100**.
         
-        • Therefore, **{selected["DN"]}** is considered the optimum pipe size for the current operating condition.
+        • Based on the hydraulic and flow analysis, **{selected["DN"]}** is considered technically suitable for evaluation under the current operating condition.
         """
         
         st.success(conclusion)
@@ -631,9 +636,27 @@ with tab6:
         # GET SPOOL DATA
         # ======================================
         
-        spool = result["spool"]
+        spool = design_spool(
+        
+            dn,                    # Existing pipe
+        
+            selected["DN"],        # Pipe yang sedang dievaluasi
+        
+            result["required_upstream"],
+        
+            result["required_downstream"]
+        
+        )
 
-        hydraulic = result["hydraulic"]
+        hydraulic = hydraulic_assessment(
+
+            operating_pressure_bar=pressure,
+        
+            pressure_drop_bar_per_m=selected["Pressure Drop (bar/m)"],
+        
+            spool_length_mm=spool["total_length"]
+        
+        )
         
         # ======================================
         # DRAW SVG
@@ -740,7 +763,7 @@ with tab6:
         f"""
         ### Hydraulic Engineering Assessment
         
-        The proposed **{best['DN']}** metering spool has an estimated pressure
+        The proposed **{selected['DN']}** metering spool has an estimated pressure
         drop of **{hydraulic["total_pressure_drop"]:.4f} bar**
         over an estimated spool length of
         **{spool["total_length"]/1000:.2f} m**.
