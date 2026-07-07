@@ -5,6 +5,7 @@ from utils.flow_lookup import get_flow_range
 from utils.steam_lookup import get_steam_property
 from utils.velocity_calculator import calculate_velocity
 from utils.reynolds import calculate_reynolds
+from utils.pressure_drop import calculate_pressure_drop
 
 
 # ==========================================================
@@ -113,7 +114,7 @@ def optimize_pipe(
 
                 flow_status = "Within Range"
 
-                score = 60
+                score = 40
 
             # =====================================
             # Velocity Score
@@ -145,6 +146,50 @@ def optimize_pipe(
 
                 score += 10
 
+            # =====================================
+            # Pressure Drop
+            # =====================================
+            
+            pressure_drop = calculate_pressure_drop(
+            
+                density,
+            
+                velocity["velocity"],
+            
+                pipe["id"],
+            
+                1.0,              # 1 meter spool
+            
+                reynolds["reynolds"]
+            
+            )
+
+            # =====================================
+            # Pressure Drop Score
+            # =====================================
+            
+            dp = pressure_drop["pressure_drop_bar"]
+            
+            if dp < 0.02:
+            
+                score += 20
+            
+            elif dp < 0.05:
+            
+                score += 15
+            
+            elif dp < 0.10:
+            
+                score += 10
+            
+            else:
+            
+                score += 0
+            
+            # =====================================
+            # RESULT
+            # =====================================
+
             result.append({
             
                 "DN": dn,
@@ -166,7 +211,9 @@ def optimize_pipe(
                 "Reynolds": int(
                     reynolds["reynolds"]
                 ),
-            
+
+                "Pressure Drop (bar/m)": pressure_drop["pressure_drop_bar"],
+                
                 "Flow Status": flow_status,
             
                 "Engineering Score": score
@@ -176,7 +223,7 @@ def optimize_pipe(
         except Exception as e:
 
             raise e
-
+            
     df = pd.DataFrame(result)
 
     df = df.sort_values(
