@@ -722,26 +722,26 @@ with tab6:
             hide_index=True
         )
 
-    st.success(
-    f"""
-    ### Hydraulic Engineering Assessment
-    
-    The proposed **{best['DN']}** metering spool has an estimated pressure
-    drop of **{hydraulic["total_pressure_drop"]:.4f} bar**
-    over an estimated spool length of
-    **{spool["total_length"]/1000:.2f} m**.
-    
-    This represents only
-    **{hydraulic["loss_ratio"]:.2f}%**
-    of the operating pressure
-    (**{pressure:.2f} bar**).
-    
-    Therefore, the proposed spool is
-    considered hydraulically acceptable
-    and is not expected to significantly
-    affect the steam distribution system.
-    """
-    )
+        st.success(
+        f"""
+        ### Hydraulic Engineering Assessment
+        
+        The proposed **{best['DN']}** metering spool has an estimated pressure
+        drop of **{hydraulic["total_pressure_drop"]:.4f} bar**
+        over an estimated spool length of
+        **{spool["total_length"]/1000:.2f} m**.
+        
+        This represents only
+        **{hydraulic["loss_ratio"]:.2f}%**
+        of the operating pressure
+        (**{pressure:.2f} bar**).
+        
+        Therefore, the proposed spool is
+        considered hydraulically acceptable
+        and is not expected to significantly
+        affect the steam distribution system.
+        """
+        )
     
     else:
 
