@@ -101,17 +101,19 @@ def hydraulic_assessment(
     # ==========================================
 
     return {
-
+    
+        "operating_pressure": operating_pressure_bar,
+    
         "pressure_drop_per_meter": pressure_drop_bar_per_m,
-
+    
         "spool_length_m": spool_length_m,
-
+    
         "total_pressure_drop": total_pressure_drop,
-
+    
         "loss_ratio": loss_ratio,
-
+    
         "status": status,
-
+    
         "comment": comment
-
+    
     }
