@@ -193,6 +193,11 @@ def analyze_installation(
     )
 
     best_pipe = pipe_optimization.iloc[0]["DN"]
+
+    print("==========================")
+    print("BEST PIPE :", best_pipe)
+    print("METER DN  :", meter["recommended_dn"])
+    print("==========================")
     
     spool = design_spool(
 
