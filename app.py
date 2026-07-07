@@ -2,6 +2,7 @@ import streamlit as st
 from PIL import Image
 from utils.meter_comparison import compare_meters
 from utils.installation_note import notes
+from utils.spool_designer import design_spool
 import os
 
 from utils.analyzer import analyze_installation
