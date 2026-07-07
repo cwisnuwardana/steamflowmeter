@@ -572,15 +572,21 @@ with tab6:
         with col4:
             st.metric("Flow Status", best["Flow Status"])
 
-        st.success(
-            """
-        **Engineering Conclusion**
+        conclusion = f"""
+        ### ✅ Engineering Conclusion
         
-        Recommended because the operating flow is within the S435 measuring range,
-        the steam velocity is in the ideal range, and the Reynolds number confirms
-        fully turbulent flow.
+        **{best["DN"]}** is recommended because the operating flow is within the SUTO S435 measuring range.
+        
+        • Steam velocity = **{best["Velocity (m/s)"]:.2f} m/s**, which is within the recommended operating velocity for vortex flow measurement.
+        
+        • Reynolds number = **{best["Reynolds"]:,}**, indicating fully turbulent flow and ensuring stable vortex shedding.
+        
+        • This pipe size achieved the highest Engineering Score (**{best["Engineering Score"]}/100**).
+        
+        • Therefore, **{best["DN"]}** is considered the optimum pipe size for the current operating condition.
         """
-        )
+        
+        st.success(conclusion)
         
         st.divider()
 
