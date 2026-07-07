@@ -553,32 +553,49 @@ with tab6:
     if result:
 
         optimization = result["pipe_optimization"]
+
+        selected_dn = st.selectbox(
+
+            "🛠 Engineering Evaluation",
+        
+            optimization["DN"].tolist(),
+        
+            index=0
+        
+        )
                 
         # ===============================
         # BEST PIPE
         # ===============================
 
-        best = optimization.iloc[0]
+        selected = optimization[
+            optimization["DN"] == selected_dn
+        ].iloc[0]
 
         col1, col2, col3, col4 = st.columns(4)
 
         with col1:
-            st.metric("🏆 Best Pipe", best["DN"])
-
+            st.metric("🏆 Best Pipe", selected["DN"])
+        
         with col2:
-            st.metric("Engineering Score", best["Engineering Score"])
-
+            st.metric("Engineering Score", selected["Engineering Score"])
+        
         with col3:
-            st.metric("Velocity", f'{best["Velocity (m/s)"]:.2f} m/s')
-
+            st.metric(
+                "Velocity",
+                f'{selected["Velocity (m/s)"]:.2f} m/s'
+            )
+        
         with col4:
-            st.metric("Flow Status", best["Flow Status"])
-
+            st.metric(
+                "Flow Status",
+                selected["Flow Status"]
+            )
         # ==========================================
         # ENGINEERING INTERPRETATION
         # ==========================================
         
-        velocity = best["Velocity (m/s)"]
+        velocity = selected["Velocity (m/s)"]
         
         if 10 <= velocity <= 35:
             velocity_note = "ideal"
@@ -595,15 +612,15 @@ with tab6:
         conclusion = f"""
         ### ✅ Engineering Conclusion
         
-        **{best["DN"]}** is recommended because the operating flow is within the SUTO S435 measuring range.
+        **{selected["DN"]}** is recommended because the operating flow is within the SUTO S435 measuring range.
         
         • Steam velocity = **{best["Velocity (m/s)"]:.2f} m/s**, classified as **{velocity_note}**, which falls within the recommended operating velocity range (10–35 m/s) for vortex flow measurement.
        
-        • Reynolds number = **{best["Reynolds"]:,}**, indicating fully turbulent flow and ensuring stable vortex shedding.
+        • Reynolds number = **{selected["Reynolds"]:,}**, indicating fully turbulent flow and ensuring stable vortex shedding.
         
-        • This pipe size achieved the highest Engineering Score (**{best["Engineering Score"]}/100**).
+        • This pipe size achieved the highest Engineering Score (**{selected["Engineering Score"]}/100**).
         
-        • Therefore, **{best["DN"]}** is considered the optimum pipe size for the current operating condition.
+        • Therefore, **{selected["DN"]}** is considered the optimum pipe size for the current operating condition.
         """
         
         st.success(conclusion)
