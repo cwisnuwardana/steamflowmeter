@@ -17,6 +17,29 @@ def generate_svg_spool(spool):
 
     total = spool["total_length"]
 
+    # ==========================================================
+    # SCALE CALCULATION
+    # ==========================================================
+    
+    LEFT = 60
+    RIGHT = 1060
+    
+    DRAW_WIDTH = RIGHT - LEFT
+    
+    scale = DRAW_WIDTH / total
+    
+    x0 = LEFT
+    
+    x1 = x0 + reducer * scale
+    
+    x2 = x1 + upstream * scale
+    
+    x3 = x2 + meter * scale
+    
+    x4 = x3 + downstream * scale
+    
+    x5 = x4 + expander * scale
+    
     svg = f"""
 <svg width="1200" height="420"
 xmlns="http://www.w3.org/2000/svg">
@@ -65,9 +88,9 @@ Steam Flow →
 <!-- EXISTING PIPE -->
 <!-- ===================================================== -->
 
-<line x1="50"
+<line x1="20"
       y1="170"
-      x2="180"
+      x2="{x0:.1f}"
       y2="170"
       stroke="black"
       stroke-width="8"/>
@@ -77,10 +100,10 @@ Steam Flow →
 
 <polygon
 points="
-180,150
-250,160
-250,180
-180,190"
+{x0:.1f},150
+{x1:.1f},160
+{x1:.1f},180
+{x0:.1f},190"
 fill="#D9D9D9"
 stroke="black"/>
 
@@ -107,7 +130,7 @@ stroke="black"
 stroke-width="2"/>
 
 <text
-x="490"
+x="{x2 + meter*scale/2 - 20:.1f}"
 y="165"
 font-size="20"
 font-weight="bold">
@@ -115,7 +138,7 @@ SUTO
 </text>
 
 <text
-x="485"
+x="{x2 + meter*scale/2 - 18:.1f}"
 y="188"
 font-size="18">
 S435
@@ -136,10 +159,10 @@ S435
 
 <polygon
 points="
-790,160
-860,150
-860,190
-790,180"
+{x4:.1f},160
+{x5:.1f},150
+{x5:.1f},190
+{x4:.1f},180"
 fill="#D9D9D9"
 stroke="black"/>
 
@@ -147,9 +170,9 @@ stroke="black"/>
 <!-- EXISTING PIPE -->
 
 <line
-x1="860"
+x1="{x5:.1f}"
 y1="170"
-x2="1050"
+x2="1180"
 y2="170"
 stroke="black"
 stroke-width="8"/>
@@ -198,12 +221,12 @@ Expander
 <!-- ===================================================== -->
 
 <line
-x1="250"
-y1="270"
-x2="430"
-y2="270"
-stroke="#0A58CA"
-stroke-width="2"/>
+x1="{x1:.1f}"
+y1="170"
+x2="{x2:.1f}"
+y2="170"
+stroke="black"
+stroke-width="5"/>
 
 <polygon points="250,270 258,266 258,274"
 fill="#0A58CA"/>
@@ -225,12 +248,13 @@ class="dimension">
 <!-- METER -->
 <!-- ===================================================== -->
 
-<line
-x1="430"
-y1="315"
-x2="610"
-y2="315"
-stroke="green"
+<rect
+x="{x2:.1f}"
+y="135"
+width="{meter*scale:.1f}"
+height="70"
+fill="#FFD600"
+stroke="black"
 stroke-width="2"/>
 
 <polygon points="430,315 438,311 438,319"
@@ -254,8 +278,8 @@ fill="green">
 <!-- ===================================================== -->
 
 <line
-x1="610"
-y1="270"
+x1="{x3:.1f}"
+x2="{x4:.1f}"
 x2="790"
 y2="270"
 stroke="#0A58CA"
