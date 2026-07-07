@@ -212,7 +212,9 @@ def optimize_pipe(
                     reynolds["reynolds"]
                 ),
 
-                "Pressure Drop (bar/m)": round(pressure_drop["pressure_drop_bar"],7
+                "Pressure Drop (bar/m)": round(
+                    pressure_drop["pressure_drop_bar"],
+                    7,
                 
                 "Flow Status": flow_status,
             
