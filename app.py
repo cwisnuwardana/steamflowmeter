@@ -219,12 +219,18 @@ if os.path.exists(PRODUCT):
 # RESULT
 # ==========================================================
 
+if "result" not in st.session_state:
+    st.session_state.result = None
+
+if "comparison" not in st.session_state:
+    st.session_state.comparison = None
+
 result = None
 comparison = None 
 
 if generate:
 
-    result = analyze_installation(
+    st.session_state.result = analyze_installation(
 
         customer_steam=steam_condition,
 
@@ -245,13 +251,16 @@ if generate:
         available_downstream=downstream
 
     )
-    comparison = compare_meters(
+    st.session_state.comparison = compare_meters(
 
         pressure,
 
         actual_flow
 
     )
+
+result = st.session_state.result
+comparison = st.session_state.comparison
 
 # ==========================================================
 # INSTALLATION IMAGE MAP
