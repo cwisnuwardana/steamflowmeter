@@ -62,6 +62,8 @@ def optimize_pipe(
             print("Flow        :", actual_flow)
             print("Density     :", density)
             print("Pipe ID     :", pipe["id"])
+            print(type(actual_flow))
+            print(actual_flow)
             
             velocity = calculate_velocity(
 
