@@ -169,9 +169,7 @@ stroke-width="8"/>
 Reducer
 </text>
 
-<text x="485" y="220" class="small">
-S435
-</text>
+
 
 <text x="790" y="220" class="small">
 Expander
