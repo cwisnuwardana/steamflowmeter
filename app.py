@@ -562,11 +562,41 @@ with tab6:
         
         )
 
+        # ===============================
+        # BEST PIPE
+        # ===============================
+
+        best = optimization.iloc[0]
+
+        col1, col2, col3, col4 = st.columns(4)
+
+        with col1:
+            st.metric("🏆 Best Pipe", best["DN"])
+
+        with col2:
+            st.metric("Engineering Score", best["Engineering Score"])
+
+        with col3:
+            st.metric("Velocity", f'{best["Velocity (m/s)"]:.2f} m/s')
+
+        with col4:
+            st.metric("Flow Status", best["Flow Status"])
+
+        st.divider()
+
+        # ===============================
+        # RANKING TABLE
+        # ===============================
+
+        st.dataframe(
+            optimization,
+            use_container_width=True,
+            hide_index=True
+        )
+
     else:
 
-        st.info(
-            "Click **Generate Engineering Analysis**"
-        )
+        st.info("Click Generate Engineering Analysis")
 
 with tab7:
 
