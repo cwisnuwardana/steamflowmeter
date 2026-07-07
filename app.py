@@ -563,15 +563,14 @@ with tab6:
 
         optimization = result["pipe_optimization"]
 
-        selected_dn = st.selectbox(
+        #selected_dn = st.selectbox(
 
-            "🛠 Engineering Evaluation",
+        #    "🛠 Engineering Evaluation",
         
-            optimization["DN"].tolist(),
-        
-            index=0
-        
-        )
+        #    optimization["DN"].tolist(),
+
+        #    key="selected_dn"
+        #)
                 
         # ===============================
         # BEST PIPE
