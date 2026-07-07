@@ -615,6 +615,8 @@ with tab6:
         # ======================================
         
         spool = result["spool"]
+
+        hydraulic = result["hydraulic"]
         
         # ======================================
         # DRAW SVG
@@ -645,6 +647,70 @@ with tab6:
         with col3:
             st.metric("Expander", f'{spool["expander_length"]} mm')
             st.metric("Total Estimation Spool Length", f'{spool["total_length"]:.0f} mm')
+
+        # ======================================
+        # Hydraulic Assessment
+        # ======================================
+        
+        st.subheader("💧 Hydraulic Assessment")
+        
+        col1, col2, col3, col4 = st.columns(4)
+        
+        with col1:
+            st.metric(
+                "Pressure Drop Rate",
+                f'{hydraulic["pressure_drop_per_meter"]:.6f} bar/m'
+            )
+        
+        with col2:
+            st.metric(
+                "Estimated Total Pressure Drop",
+                f'{hydraulic["total_pressure_drop"]:.4f} bar'
+            )
+        
+        with col3:
+            st.metric(
+                "Pressure Loss Ratio",
+                f'{hydraulic["loss_ratio"]:.2f} %'
+            )
+        
+        with col4:
+
+            st.metric(
+        
+                "Operating Pressure",
+        
+                f"{pressure:.2f} bar"
+        
+            )
+        
+        if hydraulic["status"] == "Negligible":
+        
+            st.success(
+                f'**Hydraulic Status:** {hydraulic["status"]}\n\n'
+                f'{hydraulic["comment"]}'
+            )
+        
+        elif hydraulic["status"] == "Acceptable":
+        
+            st.info(
+                f'**Hydraulic Status:** {hydraulic["status"]}\n\n'
+                f'{hydraulic["comment"]}'
+            )
+        
+        elif hydraulic["status"] == "Consider Review":
+        
+            st.warning(
+                f'**Hydraulic Status:** {hydraulic["status"]}\n\n'
+                f'{hydraulic["comment"]}'
+            )
+        
+        else:
+        
+            st.error(
+                f'**Hydraulic Status:** {hydraulic["status"]}\n\n'
+                f'{hydraulic["comment"]}'
+            )
         
         # ===============================
         # RANKING TABLE
@@ -656,6 +722,27 @@ with tab6:
             hide_index=True
         )
 
+    st.success(
+    f"""
+    ### Hydraulic Engineering Assessment
+    
+    The proposed **{best['DN']}** metering spool has an estimated pressure
+    drop of **{hydraulic["total_pressure_drop"]:.4f} bar**
+    over an estimated spool length of
+    **{spool["total_length"]/1000:.2f} m**.
+    
+    This represents only
+    **{hydraulic["loss_ratio"]:.2f}%**
+    of the operating pressure
+    (**{pressure:.2f} bar**).
+    
+    Therefore, the proposed spool is
+    considered hydraulically acceptable
+    and is not expected to significantly
+    affect the steam distribution system.
+    """
+    )
+    
     else:
 
         st.info("Click Generate Engineering Analysis")
@@ -701,6 +788,7 @@ with tab8:
     st.header("Engineering Methodology")
 
     st.markdown("""
+
 ### Methodology
 
 1. Verify customer steam statement.
