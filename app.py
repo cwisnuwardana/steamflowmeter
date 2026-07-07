@@ -552,16 +552,6 @@ with tab6:
 
         optimization = result["pipe_optimization"]
                 
-        st.dataframe(
-        
-            optimization,
-        
-            use_container_width=True,
-        
-            hide_index=True
-        
-        )
-
         # ===============================
         # BEST PIPE
         # ===============================
