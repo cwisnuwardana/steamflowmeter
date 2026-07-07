@@ -18,7 +18,7 @@ def generate_svg_spool(spool):
     total = spool["total_length"]
 
     svg = f"""
-<svg width="1100" height="320"
+<svg width="1200" height="320"
 xmlns="http://www.w3.org/2000/svg">
 
 <style>
