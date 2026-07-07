@@ -3,6 +3,7 @@ from PIL import Image
 from utils.meter_comparison import compare_meters
 from utils.installation_note import notes
 from utils.spool_designer import design_spool
+from utils.svg_spool import generate_svg_spool
 import os
 
 from utils.analyzer import analyze_installation
@@ -607,11 +608,43 @@ with tab6:
         
         st.success(conclusion)
         
-        st.divider()
-
         st.subheader("📐 Spool Design")
         
+        # ======================================
+        # GET SPOOL DATA
+        # ======================================
+        
         spool = result["spool"]
+        
+        # ======================================
+        # DRAW SVG
+        # ======================================
+        
+        svg = generate_svg_spool(spool)
+        
+        st.components.v1.html(
+            svg,
+            height=340,
+            scrolling=False
+        )
+        
+        # ======================================
+        # SHOW DIMENSIONS
+        # ======================================
+        
+        col1, col2, col3 = st.columns(3)
+        
+        with col1:
+            st.metric("Reducer", f'{spool["reducer_length"]} mm')
+            st.metric("Upstream", f'{spool["upstream"]:.0f} mm')
+        
+        with col2:
+            st.metric("S435", f'{spool["meter_length"]} mm')
+            st.metric("Downstream", f'{spool["downstream"]:.0f} mm')
+        
+        with col3:
+            st.metric("Expander", f'{spool["expander_length"]} mm')
+            st.metric("Total Spool", f'{spool["total_length"]:.0f} mm')
         
         col1, col2, col3 = st.columns(3)
         
