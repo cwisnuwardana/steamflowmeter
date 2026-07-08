@@ -7,8 +7,8 @@ from utils.svg_spool import generate_svg_spool
 from utils.spool_designer import design_spool
 from utils.hydraulic_assessment import hydraulic_assessment
 from utils.evaluation_engine import evaluate_pipe
-from my_footer import my_footer
-from modules.progress import progress
+from my_footer import *
+from modules.progress import *
 import os
 
 from utils.analyzer import analyze_installation
