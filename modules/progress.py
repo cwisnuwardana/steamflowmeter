@@ -10,8 +10,17 @@ def show_progress():
 
     steps = [
 
-        ("Calculating Process Data...", 100)
-      
+        ("Reading Input Parameters...", 15),
+
+        ("Calculating Process Data...", 30),
+
+        ("Analyzing...", 50),
+
+        ("Evaluating...", 70),
+
+        ("Building Engineering Recommendations...", 90),
+
+        ("Finalizing Audit Report...", 100)
     ]
 
     for message, value in steps:
