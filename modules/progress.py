@@ -10,7 +10,7 @@ def show_progress():
 
     steps = [
 
-        ("Calculating Process Data...", 30)
+        ("Calculating Process Data...", 100)
       
     ]
 
