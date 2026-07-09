@@ -1,39 +1,33 @@
+from utils.pipe_lookup import get_pipe_data
+
 # ==========================================================
-# S435 DIMENSION DATABASE
+# S435 FACE TO FACE DIMENSION (Dimension A - Datasheet)
 # ==========================================================
 
 S435_LENGTH = {
 
-    "DN25": 200,
-
-    "DN50": 230,
-
-    "DN65": 230,
-
-    "DN80": 250,
-
-    "DN100": 300,
-
-    "DN125": 350,
-
-    "DN150": 400,
-
-    "DN200": 500,
-
-    "DN250": 600,
-
-    "DN300": 700
+    "DN25": 100,      # Estimated (datasheet starts from DN40)
+    "DN40": 100,
+    "DN50": 110,
+    "DN65": 110,
+    "DN80": 110,
+    "DN100": 120,
+    "DN125": 133,
+    "DN150": 160,
+    "DN200": 185,
+    "DN250": 210,
+    "DN300": 240
 
 }
 
 # ==========================================================
-# REDUCER / EXPANDER STANDARD LENGTH
+# REDUCER / EXPANDER ESTIMATION
 # ==========================================================
 
-REDUCER_LENGTH = 150
-
-EXPANDER_LENGTH = 150
-
+REDUCER_LENGTH = 152
+EXPANDER_LENGTH = 152
+# Preliminary estimation based on ASME B16.9 butt-weld fittings.
+# Dynamic reducer/expander lookup will be implemented in future revision.
 
 # ==========================================================
 # DESIGN SPOOL
@@ -42,21 +36,38 @@ EXPANDER_LENGTH = 150
 def design_spool(
 
     existing_dn,
-
     recommended_dn,
-
     upstream,
-
-    downstream
+    downstream,
+    schedule
 
 ):
 
-    meter_length = S435_LENGTH.get(
-        recommended_dn,
-        250
+    # --------------------------------------------
+    # Existing Pipe
+    # --------------------------------------------
+
+    existing_pipe = get_pipe_data(
+        existing_dn,
+        schedule
     )
 
-    total = (
+    existing_straight = existing_pipe["id"] * 5
+
+    # --------------------------------------------
+    # Meter Length
+    # --------------------------------------------
+
+    meter_length = S435_LENGTH.get(
+        recommended_dn,
+        110
+    )
+
+    # --------------------------------------------
+    # Fabrication Length
+    # --------------------------------------------
+
+    fabrication_length = (
 
         REDUCER_LENGTH
 
@@ -70,11 +81,27 @@ def design_spool(
 
     )
 
+    # --------------------------------------------
+    # Installation Envelope
+    # --------------------------------------------
+
+    installation_envelope = (
+
+        existing_5D
+
+        + fabrication_length
+
+        + existing_5D
+
+    )
+
     return {
 
         "existing_dn": existing_dn,
 
         "recommended_dn": recommended_dn,
+
+        "existing_5D": round(existing_5D),
 
         "reducer_length": REDUCER_LENGTH,
 
@@ -82,10 +109,12 @@ def design_spool(
 
         "expander_length": EXPANDER_LENGTH,
 
-        "upstream": upstream,
+        "upstream": round(upstream),
 
-        "downstream": downstream,
+        "downstream": round(downstream),
 
-        "total_length": total
+        "fabrication_length": round(fabrication_length),
+
+        "installation_envelope": round(installation_envelope)
 
     }
