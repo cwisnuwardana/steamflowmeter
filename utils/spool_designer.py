@@ -1,38 +1,3 @@
-from utils.pipe_lookup import get_pipe_data
-
-# ==========================================================
-# S435 FACE TO FACE DIMENSION (Dimension A - Datasheet)
-# ==========================================================
-
-S435_LENGTH = {
-
-    "DN25": 100,      # Estimated (datasheet starts from DN40)
-    "DN40": 100,
-    "DN50": 110,
-    "DN65": 110,
-    "DN80": 110,
-    "DN100": 120,
-    "DN125": 133,
-    "DN150": 160,
-    "DN200": 185,
-    "DN250": 210,
-    "DN300": 240
-
-}
-
-# ==========================================================
-# REDUCER / EXPANDER ESTIMATION
-# ==========================================================
-
-REDUCER_LENGTH = 152
-EXPANDER_LENGTH = 152
-# Preliminary estimation based on ASME B16.9 butt-weld fittings.
-# Dynamic reducer/expander lookup will be implemented in future revision.
-
-# ==========================================================
-# DESIGN SPOOL
-# ==========================================================
-
 def design_spool(
 
     existing_dn,
@@ -44,15 +9,14 @@ def design_spool(
 ):
 
     # --------------------------------------------
-    # Existing Pipe
+    # Existing Straight Pipe (Nominal DN)
     # --------------------------------------------
 
-    existing_pipe = get_pipe_data(
-        existing_dn,
-        schedule
+    existing_dn_mm = int(
+        existing_dn.replace("DN", "")
     )
 
-    existing_5D = existing_pipe["id"] * 5
+    existing_5D = existing_dn_mm * 5
 
     # --------------------------------------------
     # Meter Length
@@ -70,13 +34,9 @@ def design_spool(
     fabrication_length = (
 
         REDUCER_LENGTH
-
         + upstream
-
         + meter_length
-
         + downstream
-
         + EXPANDER_LENGTH
 
     )
@@ -88,9 +48,7 @@ def design_spool(
     installation_envelope = (
 
         existing_5D
-
         + fabrication_length
-
         + existing_5D
 
     )
@@ -118,7 +76,3 @@ def design_spool(
         "installation_envelope": round(installation_envelope)
 
     }
-    import inspect
-
-    print("========== SPOOL DESIGNER ==========")
-    print(inspect.signature(design_spool))
