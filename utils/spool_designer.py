@@ -88,7 +88,8 @@ def design_spool(
 
     )
 
-    return {
+    return 
+    #{
 
         #"existing_dn": existing_dn,
         #"recommended_dn": recommended_dn,
@@ -100,4 +101,4 @@ def design_spool(
         #"downstream": round(downstream),
         #"fabrication_length": round(fabrication_length),
         #"installation_envelope": round(installation_envelope)
-    }
+    #}
