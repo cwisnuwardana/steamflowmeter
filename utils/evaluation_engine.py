@@ -25,13 +25,12 @@ def evaluate_pipe(
     ].iloc[0]
 
     pipe = get_pipe_data(
-
         selected["DN"],
-    
         schedule
-    
     )
 
+    print("Pipe Data :", pipe)
+    print("========================")
     required_upstream = pipe["id"] * 20
     
     required_downstream = pipe["id"] * 5
