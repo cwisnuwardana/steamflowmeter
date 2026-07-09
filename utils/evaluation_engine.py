@@ -51,19 +51,28 @@ def evaluate_pipe(
     )
     
     # =====================================
-    # INSTALLATION RULE
+    # EFFECTIVE DISTURBANCE
     # =====================================
-
-    rule = installation_rules[disturbance]
-    print(rule)
-    print(disturbance)
-    upstream_D = rule["upstream"]
-
-    downstream_D = rule["downstream"]
-
-    required_upstream = selected_dn_mm * upstream_D
     
-    required_downstream = selected_dn_mm * downstream_D
+    # Existing pipe unchanged
+    if selected["DN"] == existing_dn:
+    
+        effective_disturbance = disturbance
+    
+    # Pipe reduction required
+    else:
+    
+        effective_disturbance = "Reducer"
+    
+    rule = installation_rules[effective_disturbance]
+    
+    upstream_D = rule["upstream"]
+    
+    downstream_D = rule["downstream"]
+    
+    print("Existing Disturbance :", disturbance)
+    print("Effective Disturbance:", effective_disturbance)
+    print(rule)
 
     # =====================================
     # DESIGN SPOOL
@@ -124,15 +133,17 @@ def evaluate_pipe(
     # =====================================
 
     return {
-
+    
         "best": best,
-
+    
         "selected": selected,
-
+    
         "spool": spool,
-
+    
         "hydraulic": hydraulic,
-
-        "velocity_note": velocity_note
-
+    
+        "velocity_note": velocity_note,
+    
+        "effective_disturbance": effective_disturbance
+    
     }
