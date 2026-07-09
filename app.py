@@ -737,7 +737,7 @@ with tab6:
         
         #)
 
-        st.write(spool)
+        #st.write(spool)
         
         # ======================================
         # DRAW SVG
