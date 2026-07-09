@@ -722,7 +722,7 @@ with tab6:
         
         #    pressure_drop_bar_per_m=selected["Pressure Drop (bar/m)"],
         
-        #    spool_length_mm=spool["total_length"]
+        #    spool_length_mm=spool["fabrication_length"]
         
         #)
         
