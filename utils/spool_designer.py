@@ -1,3 +1,38 @@
+from utils.pipe_lookup import get_pipe_data
+
+# ==========================================================
+# S435 FACE TO FACE DIMENSION (Dimension A - Datasheet)
+# ==========================================================
+
+S435_LENGTH = {
+
+    "DN25": 100,      # Estimated (datasheet starts from DN40)
+    "DN40": 100,
+    "DN50": 110,
+    "DN65": 110,
+    "DN80": 110,
+    "DN100": 120,
+    "DN125": 133,
+    "DN150": 160,
+    "DN200": 185,
+    "DN250": 210,
+    "DN300": 240
+
+}
+
+# ==========================================================
+# REDUCER / EXPANDER ESTIMATION
+# ==========================================================
+
+REDUCER_LENGTH = 152
+EXPANDER_LENGTH = 152
+# Preliminary estimation based on ASME B16.9 butt-weld fittings.
+# Dynamic reducer/expander lookup will be implemented in future revision.
+
+# ==========================================================
+# DESIGN SPOOL
+# ==========================================================
+
 def design_spool(
 
     existing_dn,
