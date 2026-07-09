@@ -640,6 +640,8 @@ with tab6:
             disturbance
         
         )
+
+        effective_disturbance = evaluation["effective_disturbance"]    
         
         best = evaluation["best"]
         
@@ -700,7 +702,15 @@ with tab6:
         st.success(conclusion)
         
         st.subheader("📐 Installation Layout")
+        st.info(
+            f"""
+            **Installation Basis**
         
+            Existing disturbance : **{disturbance}**
+        
+            Proposed spool disturbance : **{effective_disturbance}**
+            """
+        )
         # ======================================
         # GET SPOOL DATA
         # ======================================
