@@ -13,13 +13,13 @@ installation_rules = {
     },
 
     "2 × 90° Elbow": {
-        "upstream": 35,
+        "upstream": 30,
         "downstream": 5,
         "image": "double_elbow.png"
     },
 
     "Reducer": {
-        "upstream": 20,
+        "upstream": 15,
         "downstream": 5,
         "image": "reducer.png"
     },
