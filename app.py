@@ -632,7 +632,9 @@ with tab6:
         
             selected_dn,
         
-            pressure
+            pressure,
+
+            schedule
         
         )
         
