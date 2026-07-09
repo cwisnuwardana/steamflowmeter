@@ -69,7 +69,9 @@ def evaluate_pipe(
 
         required_downstream,
 
-        schedule
+        schedule,
+
+        disturbance
 
     )
 
