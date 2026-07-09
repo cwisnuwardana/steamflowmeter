@@ -220,7 +220,7 @@ def analyze_installation(
     
         pressure_drop_bar_per_m=pipe_optimization.iloc[0]["Pressure Drop (bar/m)"],
     
-        spool_length_mm=spool["fabricating_length"]
+        spool_length_mm=spool["fabrication_length"]
 
     )
     
