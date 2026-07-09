@@ -730,9 +730,9 @@ with tab6:
         # ======================================
         # DRAW SVG
         # ======================================
-        
-        svg = generate_svg_spool(spool)
         print(spool)
+        svg = generate_svg_spool(spool)
+        
         st.components.v1.html(
             svg,
             height=380,
