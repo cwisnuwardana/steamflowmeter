@@ -1,5 +1,5 @@
 # ==========================================================
-# SVG SPOOL GENERATOR V2
+# SVG SPOOL GENERATOR V3
 # SUTO S435 Engineering Assistant
 # ==========================================================
 
@@ -15,17 +15,23 @@ def generate_svg_spool(spool):
     existing = spool["existing_dn"]
     recommended = spool["recommended_dn"]
 
-    total = spool["total_length"]
+    existing_5D = spool["existing_5D"]
+
+    fabrication = spool["fabrication_length"]
+
+    envelope = spool["installation_envelope"]
 
     svg = f"""
-<svg width="100%" height="420"
+<svg
+width="100%"
+height="430"
+viewBox="0 0 1200 430"
 xmlns="http://www.w3.org/2000/svg">
-viewBox="0 0 1200 420"
 
 <style>
 
 text {{
-    font-family:Arial;
+    font-family: Arial;
 }}
 
 .title {{
@@ -48,17 +54,21 @@ text {{
 
 </style>
 
+<!-- ================================================= -->
 <!-- TITLE -->
+<!-- ================================================= -->
 
 <text x="30" y="35" class="title">
 SUTO S435 Metering Spool Layout
 </text>
 
-<text x="980" y="35" class="label">
-Steam Flow →
+<text x="1010" y="35" class="label">
+Steam →
 </text>
 
+<!-- ================================================= -->
 <!-- EXISTING PIPE -->
+<!-- ================================================= -->
 
 <line
 x1="50"
@@ -89,7 +99,9 @@ y2="170"
 stroke="black"
 stroke-width="5"/>
 
-<!-- METER -->
+<!-- ================================================= -->
+<!-- S435 -->
+<!-- ================================================= -->
 
 <rect
 x="430"
@@ -125,7 +137,9 @@ y2="170"
 stroke="black"
 stroke-width="5"/>
 
+<!-- ================================================= -->
 <!-- EXPANDER -->
+<!-- ================================================= -->
 
 <polygon
 points="
@@ -146,13 +160,15 @@ y2="170"
 stroke="black"
 stroke-width="8"/>
 
+<!-- ================================================= -->
 <!-- PIPE LABEL -->
+<!-- ================================================= -->
 
-<text x="75" y="145" class="label">
+<text x="80" y="145" class="label">
 {existing}
 </text>
 
-<text x="325" y="145" class="label">
+<text x="320" y="145" class="label">
 {recommended}
 </text>
 
@@ -164,19 +180,21 @@ stroke-width="8"/>
 {existing}
 </text>
 
+<!-- ================================================= -->
 <!-- COMPONENT -->
+<!-- ================================================= -->
 
 <text x="185" y="220" class="small">
 Reducer
 </text>
 
-
-
 <text x="790" y="220" class="small">
 Expander
 </text>
 
+<!-- ================================================= -->
 <!-- UPSTREAM -->
+<!-- ================================================= -->
 
 <line
 x1="250"
@@ -186,10 +204,12 @@ y2="270"
 stroke="#0A58CA"
 stroke-width="2"/>
 
-<polygon points="250,270 258,266 258,274"
+<polygon
+points="250,270 258,266 258,274"
 fill="#0A58CA"/>
 
-<polygon points="430,270 422,266 422,274"
+<polygon
+points="430,270 422,266 422,274"
 fill="#0A58CA"/>
 
 <text
@@ -201,7 +221,9 @@ class="dimension">
 
 </text>
 
+<!-- ================================================= -->
 <!-- METER -->
+<!-- ================================================= -->
 
 <line
 x1="430"
@@ -211,10 +233,12 @@ y2="315"
 stroke="green"
 stroke-width="2"/>
 
-<polygon points="430,315 438,311 438,319"
+<polygon
+points="430,315 438,311 438,319"
 fill="green"/>
 
-<polygon points="610,315 602,311 602,319"
+<polygon
+points="610,315 602,311 602,319"
 fill="green"/>
 
 <text
@@ -226,7 +250,9 @@ fill="green">
 
 </text>
 
+<!-- ================================================= -->
 <!-- DOWNSTREAM -->
+<!-- ================================================= -->
 
 <line
 x1="610"
@@ -236,10 +262,12 @@ y2="270"
 stroke="#0A58CA"
 stroke-width="2"/>
 
-<polygon points="610,270 618,266 618,274"
+<polygon
+points="610,270 618,266 618,274"
 fill="#0A58CA"/>
 
-<polygon points="790,270 782,266 782,274"
+<polygon
+points="790,270 782,266 782,274"
 fill="#0A58CA"/>
 
 <text
@@ -251,7 +279,9 @@ class="dimension">
 
 </text>
 
+<!-- ================================================= -->
 <!-- SUMMARY -->
+<!-- ================================================= -->
 
 <line
 x1="30"
@@ -262,22 +292,47 @@ stroke="#CCCCCC"/>
 
 <text
 x="30"
-y="385"
+y="380"
 font-size="18"
 font-weight="bold">
 
-Overall Spool Length : {total:.0f} mm
+Recommended Installation Envelope :
+{envelope:.0f} mm
 
 </text>
 
 <text
-x="500"
-y="385"
-font-size="16">
+x="30"
+y="405"
+font-size="14">
 
-Reducer : {reducer} mm |
-Meter : {meter} mm |
-Expander : {expander} mm
+Inlet Straight :
+{existing_5D:.0f} mm
+
+|
+
+Reducer :
+{reducer} mm
+
+|
+
+Fabrication :
+{fabrication:.0f} mm
+
+|
+
+Meter :
+{meter} mm
+
+|
+
+Expander :
+{expander} mm
+
+|
+
+Outlet Straight :
+{existing_5D:.0f} mm
 
 </text>
 
