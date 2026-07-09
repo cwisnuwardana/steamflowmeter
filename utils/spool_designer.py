@@ -88,16 +88,16 @@ def design_spool(
 
     )
 
-    return #{
+    return {
 
-        #"existing_dn": existing_dn,
-        #"recommended_dn": recommended_dn,
-        #"existing_5D": round(existing_5D),
-        #"reducer_length": REDUCER_LENGTH,
-        #"meter_length": meter_length,
-        #"expander_length": EXPANDER_LENGTH,
-        #"upstream": round(upstream),
-        #"downstream": round(downstream),
-        #"fabrication_length": round(fabrication_length),
-        #"installation_envelope": round(installation_envelope)
-    #}
+        "existing_dn": existing_dn,
+        "recommended_dn": recommended_dn,
+        "existing_5D": round(existing_5D),
+        "reducer_length": REDUCER_LENGTH,
+        "meter_length": meter_length,
+        "expander_length": EXPANDER_LENGTH,
+        "upstream": round(upstream),
+        "downstream": round(downstream),
+        "fabrication_length": round(fabrication_length),
+        "installation_envelope": round(installation_envelope)
+    }
