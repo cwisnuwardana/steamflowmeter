@@ -698,7 +698,7 @@ with tab6:
         
         st.success(conclusion)
         
-        st.subheader("📐 Spool Design")
+        st.subheader("📐 Installation Layout")
         
         # ======================================
         # GET SPOOL DATA
@@ -742,20 +742,55 @@ with tab6:
         # SHOW DIMENSIONS
         # ======================================
         
-        col1, col2, col3 = st.columns(3)
+        col1, col2, col3, col4 = st.columns(4)
         
         with col1:
-            st.metric("Reducer", f'{spool["reducer_length"]} mm')
-            st.metric("Upstream", f'{spool["upstream"]:.0f} mm')
+
+            st.metric(
+                "Inlet Straight Pipe",
+                f'{spool["existing_5D"]:.0f} mm'
+            )
         
+            st.metric(
+                "Reducer",
+                f'{spool["reducer_length"]:.0f} mm'
+            )        
         with col2:
-            st.metric("S435", f'{spool["meter_length"]} mm')
-            st.metric("Downstream", f'{spool["downstream"]:.0f} mm')
+
+            st.metric(
+                "Reducer → S435",
+                f'{spool["upstream"]:.0f} mm'
+            )
+        
+            st.metric(
+                "S435",
+                f'{spool["meter_length"]:.0f} mm'
+            )
         
         with col3:
-            st.metric("Expander", f'{spool["expander_length"]} mm')
-            st.metric("Total Estimation Spool Length", f'{spool["total_length"]:.0f} mm')
 
+            st.metric(
+                "S435 → Expander",
+                f'{spool["downstream"]:.0f} mm'
+            )
+        
+            st.metric(
+                "Expander",
+                f'{spool["expander_length"]:.0f} mm'
+            )
+
+        with col4:
+
+            st.metric(
+                "Outlet Straight Pipe",
+                f'{spool["existing_5D"]:.0f} mm'
+            )
+        
+            st.metric(
+                "Installation Envelope",
+                f'{spool["installation_envelope"]:.0f} mm'
+            )
+            
         # ======================================
         # Hydraulic Assessment
         # ======================================
@@ -788,6 +823,11 @@ with tab6:
                 "Operating Pressure",
                 f'{hydraulic["operating_pressure"]:.2f} bar'
             )
+        st.caption(
+
+            "Installation envelope includes the recommended inlet/outlet straight pipe sections (5D), metering spool, and transition fittings."
+
+        )
         
         if hydraulic["status"] == "Negligible":
         
@@ -833,19 +873,18 @@ with tab6:
         
         The proposed **{selected['DN']}** metering spool has an estimated pressure
         drop of **{hydraulic["total_pressure_drop"]:.4f} bar**
-        over an estimated spool length of
-        **{spool["total_length"]/1000:.2f} m**.
+        over a fabricated spool length of
+        **{spool["fabrication_length"]/1000:.2f} m**.
         
         This represents only
         **{hydraulic["loss_ratio"]:.2f}%**
         of the operating pressure
         (**{hydraulic["operating_pressure"]:.2f} bar**).
         
-        Therefore, the proposed spool is
-        considered hydraulically acceptable
-        and is not expected to significantly
-        affect the steam distribution system.
-        """
+        Therefore, the hydraulic impact of the proposed metering spool is considered negligible 
+        and is not expected to significantly affect the existing steam distribution system.
+        The hydraulic assessment is based on the fabricated metering spool length only and 
+        does not include the recommended existing straight pipe sections used for installation purposes."""
         )
     
     else:
