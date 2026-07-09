@@ -35,16 +35,17 @@ def evaluate_pipe(
     required_upstream = pipe["id"] * 20
     
     required_downstream = pipe["id"] * 5
+    
     spool = design_spool(
-
+    
         existing_dn,
-
+    
         selected["DN"],
-
-        result["required_upstream"],
-
-        result["required_downstream"]
-
+    
+        required_upstream,
+    
+        required_downstream
+    
     )
 
     hydraulic = hydraulic_assessment(
