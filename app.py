@@ -59,11 +59,11 @@ st.sidebar.title("Engineering Input")
 
 company = st.sidebar.text_input(
     "Company",
-    placeholder="PT ABC Indonesia"
+    placeholder="PT Suto iTec Indonesia"
 )
 
 project = st.sidebar.text_input(
-    "Project",
+    "Steam Monitoring",
     placeholder="Steam Flowmeter Installation"
 )
 
@@ -95,7 +95,7 @@ pressure = st.sidebar.number_input(
 
     max_value=1.60,
 
-    value=0.90,
+    value=0.60,
 
     step=0.10
 
@@ -107,7 +107,7 @@ temperature = st.sidebar.number_input(
 
     min_value=0.0,
 
-    value=170.0,
+    value=147.0,
 
     step=1.0
 
@@ -119,6 +119,7 @@ dn = st.sidebar.selectbox(
 
     [
         "DN25",
+        "DN40",
         "DN50",
         "DN65",
         "DN80",
@@ -156,7 +157,7 @@ actual_flow = st.sidebar.number_input(
 
     min_value=0.00,
 
-    value=1.00,
+    value=0.1,
 
     step=0.01
 
@@ -188,7 +189,7 @@ upstream = st.sidebar.number_input(
 
     "Available Upstream Length (mm)",
 
-    value=1000
+    value=2500
 
 )
 
@@ -196,7 +197,7 @@ downstream = st.sidebar.number_input(
 
     "Available Downstream Length (mm)",
 
-    value=500
+    value=1000
 
 )
 
