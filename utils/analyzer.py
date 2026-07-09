@@ -208,7 +208,9 @@ def analyze_installation(
                
         required_upstream,
     
-        required_downstream
+        required_downstream,
+
+        Schedule
 
     )
 
