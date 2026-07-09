@@ -46,7 +46,8 @@ def evaluate_pipe(
     # =====================================
 
     rule = installation_rules[disturbance]
-
+    print(rule)
+    print(disturbance)
     upstream_D = rule["upstream"]
 
     downstream_D = rule["downstream"]
