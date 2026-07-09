@@ -28,7 +28,7 @@ def evaluate_pipe(
     ].iloc[0]
 
     # =====================================
-    # PIPE DATA
+    # PIPE DATA (Hydraulic Calculation)
     # =====================================
 
     pipe = get_pipe_data(
@@ -39,40 +39,60 @@ def evaluate_pipe(
     pipe_id = pipe["id"]
 
     # =====================================
-    # NOMINAL PIPE DIAMETER (mm)
+    # NOMINAL PIPE DIAMETER (Installation)
     # =====================================
-    
+
     selected_dn_mm = int(
         selected["DN"].replace("DN", "")
     )
-    
+
     existing_dn_mm = int(
         existing_dn.replace("DN", "")
     )
-    
+
     # =====================================
     # EFFECTIVE DISTURBANCE
     # =====================================
-    
-    # Existing pipe unchanged
+
+    # Existing installation
     if selected["DN"] == existing_dn:
-    
+
         effective_disturbance = disturbance
-    
-    # Pipe reduction required
+
+    # Proposed installation
     else:
-    
+
         effective_disturbance = "Reducer"
-    
-    rule = installation_rules[effective_disturbance]
-    
+
+    rule = installation_rules[
+        effective_disturbance
+    ]
+
     upstream_D = rule["upstream"]
-    
+
     downstream_D = rule["downstream"]
-    
+
+    # =====================================
+    # REQUIRED STRAIGHT PIPE
+    # (Based on Nominal DN)
+    # =====================================
+
+    required_upstream = (
+        selected_dn_mm * upstream_D
+    )
+
+    required_downstream = (
+        selected_dn_mm * downstream_D
+    )
+
+    print("==============================")
     print("Existing Disturbance :", disturbance)
     print("Effective Disturbance:", effective_disturbance)
     print(rule)
+    print("Selected DN :", selected["DN"])
+    print("Required Upstream :", required_upstream)
+    print("Required Downstream :", required_downstream)
+    print("==============================")
 
     # =====================================
     # DESIGN SPOOL
@@ -93,16 +113,21 @@ def evaluate_pipe(
     )
 
     # =====================================
-    # HYDRAULIC
+    # HYDRAULIC ASSESSMENT
+    # (Still using Pipe ID)
     # =====================================
 
     hydraulic = hydraulic_assessment(
 
         operating_pressure_bar=pressure,
 
-        pressure_drop_bar_per_m=selected["Pressure Drop (bar/m)"],
+        pressure_drop_bar_per_m=selected[
+            "Pressure Drop (bar/m)"
+        ],
 
-        spool_length_mm=spool["fabrication_length"]
+        spool_length_mm=spool[
+            "fabrication_length"
+        ]
 
     )
 
@@ -133,17 +158,17 @@ def evaluate_pipe(
     # =====================================
 
     return {
-    
+
         "best": best,
-    
+
         "selected": selected,
-    
+
         "spool": spool,
-    
+
         "hydraulic": hydraulic,
-    
+
         "velocity_note": velocity_note,
-    
+
         "effective_disturbance": effective_disturbance
-    
+
     }
