@@ -1,5 +1,6 @@
 from utils.spool_designer import design_spool
 from utils.hydraulic_assessment import hydraulic_assessment
+from utils.pipe_lookup import get_pipe_data
 
 def evaluate_pipe(
 
@@ -9,7 +10,9 @@ def evaluate_pipe(
 
     selected_dn,
 
-    pressure
+    pressure,
+
+    schedule
 
 ):
 
@@ -21,6 +24,17 @@ def evaluate_pipe(
         optimization["DN"] == selected_dn
     ].iloc[0]
 
+    pipe = get_pipe_data(
+
+        selected["DN"],
+    
+        schedule
+    
+    )
+
+    required_upstream = pipe["id"] * 20
+    
+    required_downstream = pipe["id"] * 5
     spool = design_spool(
 
         existing_dn,
