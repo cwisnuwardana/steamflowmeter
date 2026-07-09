@@ -1,6 +1,7 @@
 from utils.spool_designer import design_spool
 from utils.hydraulic_assessment import hydraulic_assessment
 from utils.pipe_lookup import get_pipe_data
+from utils.installation_rules import installation_rules
 
 def evaluate_pipe(
 
@@ -12,7 +13,9 @@ def evaluate_pipe(
 
     pressure,
 
-    schedule
+    schedule,
+
+    disturbance
 
 ):
 
@@ -31,10 +34,16 @@ def evaluate_pipe(
 
     print("Pipe Data :", pipe)
     print("========================")
-    required_upstream = pipe["id"] * 20
+    rule = installation_rules[disturbance]
     
-    required_downstream = pipe["id"] * 5
+    upstream_D = rule["upstream"]
     
+    downstream_D = rule["downstream"]
+    
+    required_upstream = pipe["id"] * upstream_D
+    
+    required_downstream = pipe["id"] * downstream_D
+        
     spool = design_spool(
     
         existing_dn,
