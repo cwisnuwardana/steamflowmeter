@@ -32,15 +32,24 @@ def evaluate_pipe(
     # =====================================
 
     pipe = get_pipe_data(
-
         selected["DN"],
-
         schedule
-
     )
 
     pipe_id = pipe["id"]
 
+    # =====================================
+    # NOMINAL PIPE DIAMETER (mm)
+    # =====================================
+    
+    selected_dn_mm = int(
+        selected["DN"].replace("DN", "")
+    )
+    
+    existing_dn_mm = int(
+        existing_dn.replace("DN", "")
+    )
+    
     # =====================================
     # INSTALLATION RULE
     # =====================================
@@ -52,9 +61,9 @@ def evaluate_pipe(
 
     downstream_D = rule["downstream"]
 
-    required_upstream = pipe_id * upstream_D
-
-    required_downstream = pipe_id * downstream_D
+    required_upstream = selected_dn_mm * upstream_D
+    
+    required_downstream = selected_dn_mm * downstream_D
 
     # =====================================
     # DESIGN SPOOL
