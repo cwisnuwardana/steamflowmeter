@@ -52,7 +52,7 @@ def design_spool(
         schedule
     )
 
-    existing_straight = existing_pipe["id"] * 5
+    existing_5D = existing_pipe["id"] * 5
 
     # --------------------------------------------
     # Meter Length
