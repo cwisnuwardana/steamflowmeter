@@ -85,31 +85,24 @@ def evaluate_pipe(
         selected_dn_mm * downstream_D
     )
 
-    print("==============================")
-    print("Existing Disturbance :", disturbance)
-    print("Effective Disturbance:", effective_disturbance)
-    print(rule)
-    print("Selected DN :", selected["DN"])
-    print("Required Upstream :", required_upstream)
-    print("Required Downstream :", required_downstream)
-    print("==============================")
+    print("==== BEFORE DESIGN SPOOL ====")
+    print(existing_dn)
+    print(selected["DN"])
+    print(required_upstream)
+    print(required_downstream)
+    print(schedule)
+    print("=============================")
 
     # =====================================
     # DESIGN SPOOL
     # =====================================
 
     spool = design_spool(
-
         existing_dn,
-
         selected["DN"],
-
         required_upstream,
-
         required_downstream,
-
         schedule
-
     )
 
     # =====================================
@@ -118,17 +111,13 @@ def evaluate_pipe(
     # =====================================
 
     hydraulic = hydraulic_assessment(
-
         operating_pressure_bar=pressure,
-
         pressure_drop_bar_per_m=selected[
             "Pressure Drop (bar/m)"
         ],
-
         spool_length_mm=spool[
             "fabrication_length"
         ]
-
     )
 
     # =====================================
@@ -136,21 +125,13 @@ def evaluate_pipe(
     # =====================================
 
     velocity = selected["Velocity (m/s)"]
-
     if 10 <= velocity <= 35:
-
         velocity_note = "ideal"
-
     elif 5 <= velocity < 10:
-
         velocity_note = "acceptable"
-
     elif 35 < velocity <= 45:
-
         velocity_note = "slightly high"
-
     else:
-
         velocity_note = "outside the recommended range"
 
     # =====================================
@@ -158,17 +139,10 @@ def evaluate_pipe(
     # =====================================
 
     return {
-
         "best": best,
-
         "selected": selected,
-
         "spool": spool,
-
         "hydraulic": hydraulic,
-
         "velocity_note": velocity_note,
-
         "effective_disturbance": effective_disturbance
-
     }
