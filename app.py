@@ -734,7 +734,7 @@ with tab6:
         
         st.components.v1.html(
             svg,
-            height=500,
+            height=330,
             scrolling=False
         )
         
