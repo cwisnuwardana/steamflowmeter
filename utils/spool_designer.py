@@ -118,3 +118,7 @@ def design_spool(
         "installation_envelope": round(installation_envelope)
 
     }
+    import inspect
+
+    print("========== SPOOL DESIGNER ==========")
+    print(inspect.signature(design_spool))
