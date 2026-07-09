@@ -279,63 +279,6 @@ class="dimension">
 
 </text>
 
-<!-- ================================================= -->
-<!-- SUMMARY -->
-<!-- ================================================= -->
-
-<line
-x1="30"
-y1="350"
-x2="1100"
-y2="350"
-stroke="#CCCCCC"/>
-
-<text
-x="30"
-y="380"
-font-size="18"
-font-weight="bold">
-
-Recommended Installation Envelope :
-{envelope:.0f} mm
-
-</text>
-
-<text
-x="30"
-y="405"
-font-size="14">
-
-Inlet Straight :
-{existing_5D:.0f} mm
-
-|
-
-Reducer :
-{reducer} mm
-
-|
-
-Fabrication :
-{fabrication:.0f} mm
-
-|
-
-Meter :
-{meter} mm
-
-|
-
-Expander :
-{expander} mm
-
-|
-
-Outlet Straight :
-{existing_5D:.0f} mm
-
-</text>
-
 </svg>
 """
 
