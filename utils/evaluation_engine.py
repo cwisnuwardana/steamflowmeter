@@ -85,14 +85,6 @@ def evaluate_pipe(
         selected_dn_mm * downstream_D
     )
 
-    print("==== BEFORE DESIGN SPOOL ====")
-    print(existing_dn)
-    print(selected["DN"])
-    print(required_upstream)
-    print(required_downstream)
-    print(schedule)
-    print("=============================")
-
     # =====================================
     # DESIGN SPOOL
     # =====================================
