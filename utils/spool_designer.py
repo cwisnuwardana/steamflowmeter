@@ -88,8 +88,7 @@ def design_spool(
 
     )
 
-    return 
-    #{
+    return #{
 
         #"existing_dn": existing_dn,
         #"recommended_dn": recommended_dn,
