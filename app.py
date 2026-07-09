@@ -726,11 +726,13 @@ with tab6:
         #    spool_length_mm=spool["fabrication_length"]
         
         #)
+
+        st.write(spool)
         
         # ======================================
         # DRAW SVG
         # ======================================
-        print(spool)
+        
         svg = generate_svg_spool(spool)
         
         st.components.v1.html(
@@ -738,7 +740,7 @@ with tab6:
             height=380,
             scrolling=False
         )
-        
+                             
         # ======================================
         # SHOW DIMENSIONS
         # ======================================
