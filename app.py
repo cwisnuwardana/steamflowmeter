@@ -93,7 +93,7 @@ pressure = st.sidebar.number_input(
 
     min_value=0.02,
 
-    max_value=1.90,
+    max_value=2.0,
 
     value=0.60,
 
